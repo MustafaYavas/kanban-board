@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const Home = () => {
     return (
-        <div className='grid grid-cols-1 sm:grid-cols-2 h-full'>
+        <div className='grid grid-cols-1 sm:grid-cols-2'>
             <div className='flex flex-col justify-center items-start ml-10'>
                 <h1 className='text-8xl text-blue-600 font-bold'>Kanban</h1>
                 <h3 className='text-4xl text-blue-600 font-bold pb-16 '>Visualize your workflow</h3>
@@ -37,8 +37,8 @@ const Home = () => {
             </div>
             
             
-            <div className='mt-4'>
-                <img src={banner} className='inline-block h-full align-middle' alt='banner'/>
+            <div className='inline-block h-full align-middle'>
+                <img src={banner} alt='banner'/>
             </div>
         </div>
     )
