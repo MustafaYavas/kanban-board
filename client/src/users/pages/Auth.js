@@ -1,8 +1,8 @@
-import Login from '../components/Login';
+import AuthForm from '../components/AuthForm';
 
 const Auth = () => {
     return (
-        <Login />
+        <AuthForm />
     )
 }
 
