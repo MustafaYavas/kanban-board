@@ -1,18 +1,27 @@
 import styles from "./Input.module.css";
 
 const Input = (props) => {
-	const { icon, className, iconClass, style, type, placeholder } = props;
+	const {label, icon, className, iconClass, style, type, min, max, placeholder } = props;
 
 	return (
-		<div className={styles.input}>
-			<div className={`${styles.icon} ${iconClass}`}>{icon}</div>
-			<input
-				className={className}
-				style={style}
-				type={type}
-				placeholder={placeholder}
-			/>
-		</div>
+		<>
+			{label && 
+				<div className='text-center'>
+					<label>{label}</label>
+				</div>
+			}
+			<div className={styles.input}>
+				<div className={`${styles.icon} ${iconClass}`}>{icon}</div>
+				<input
+					className={className}
+					style={style}
+					type={type}
+					min={min}
+					max={max}
+					placeholder={placeholder}
+				/>
+			</div>
+		</>
 	);
 };
 

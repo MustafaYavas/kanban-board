@@ -1,7 +1,8 @@
+import NewKanbanForm from '../components/NewKanban/NewKanbanForm';
 
 const NewBoard = () => {
     return (
-        <h1>Create New Kanban Board</h1>
+        <NewKanbanForm />
     )
 }
 
