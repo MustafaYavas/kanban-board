@@ -11,28 +11,26 @@ const NewKanbanForm = () => {
 	};
 
 	return (
-		<div className='flex flex-col justify-center items-center mt-20 text-white'>
-			<h1 className='text-blue-600 font-bold text-lg mb-4'>
+		<div className='flex flex-col justify-center items-center  my-20 py-5 border-y'>
+			<h1 className='text-2xl font-bold mb-5 text-blue-600'>
 				Create New Kanban Board
 			</h1>
 
-			<form className='p-5 bg-slate-800 rounded-lg'>
+			<form className='rounded-lg'>
 				<Input
 					icon={<MdOutlineDriveFileRenameOutline />}
-					label='Kanban Title'
-					iconClass='top-2.5 left-2.5 mt-2'
-					className='bg-gray-900 mb-5 mt-2 border-2 rounded-3xl p-1 pr-4 pl-10 focus:border-blue-600'
-					style={{ width: '20rem' }}
+					iconClass='top-2.5 left-2.5'
+					className=' mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-10 focus:border-blue-600'
+					style={{ width: '30rem' }}
 					type='text'
 					placeholder='Title'
 				/>
 
 				<Input
 					icon={<TiGroup />}
-					label='Number of Participants'
-					iconClass='top-2.5 left-2.5 mt-2'
-					className='bg-gray-900 mb-5 mt-2 border-2 rounded-3xl p-1 pr-4 pl-10 focus:border-blue-600'
-					style={{ width: '20rem' }}
+					iconClass='top-2.5 left-2.5'
+					className='mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-10 focus:border-blue-600'
+					style={{ width: '30rem' }}
 					type='number'
 					min='1'
 					max='20'
@@ -41,10 +39,9 @@ const NewKanbanForm = () => {
 
 				<Input
 					icon={<BsQuestion />}
-					label='Usage Area'
-					iconClass='top-2.5 left-2.5 mt-2'
-					className='bg-gray-900 mb-5 mt-2 border-2 rounded-3xl p-1 pr-4 pl-10 focus:border-blue-600'
-					style={{ width: '20rem' }}
+					iconClass='top-2.5 left-2.5'
+					className='mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-10 focus:border-blue-600'
+					style={{ width: '30rem' }}
 					type='text'
 					placeholder='What will you use it for? eg: Personal'
 				/>
@@ -52,7 +49,7 @@ const NewKanbanForm = () => {
 				<div className='flex justify-center'>
 					<Button
 						type='submit'
-						className='border border-blue-600 p-2 rounded-3xl hover:bg-blue-600 w-1/2'
+						className='rounded-3xl px-6 py-2 text-white bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-black text-center font-bold'
 						onClick={createKanbanHandler}
 					>
 						CREATE

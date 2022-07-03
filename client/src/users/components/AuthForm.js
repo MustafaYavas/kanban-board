@@ -1,5 +1,5 @@
-import login from '../../assets/login.png';
-import styles from './AuthForm.module.css';
+// import login from '../../assets/login.png';
+// import styles from './AuthForm.module.css';
 import Input from '../../shared/components/UI/Input/Input';
 import Button from '../../shared/components/UI/Button';
 
@@ -9,73 +9,65 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 const AuthForm = () => {
-    const [isLogin, setIsLogin] = useState(false);
+	const [isLogin, setIsLogin] = useState(false);
 
-    const switchAuthModeHandler = () => {
-        setIsLogin(!isLogin)
-    }
+	const switchAuthModeHandler = () => {
+		setIsLogin(!isLogin);
+	};
 
-    return (
-        <div className='h-full flex justify-center items-center'>
-            <div className='mx-auto w-1/2 rounded-lg flex flex-col justify-center items-center shadow-2xl bg-slate-800'>
-                <div className={`${styles.container} border-b border-slate-700`}>
-                    <img className='rounded-t-lg' src={login} alt='login' />
-                </div>
-                
-                
-                <div className='flex flex-col justify-center items-center text-white my-5'>
-                    <h1 className='text-xl mb-5'>
-                        {isLogin ? 'USER SIGNUP' : 'USER LOGIN'}
-                    </h1>
+	return (
+		<div className='flex flex-col justify-center items-center my-20 py-5 border-y'>
+			<h1 className='text-2xl font-bold mb-5 text-blue-600'>
+				{isLogin ? 'USER SIGNUP' : 'USER LOGIN'}
+			</h1>
 
-                    <Input 
-                        icon={<MdAlternateEmail/>}
-                        iconClass='top-2.5 left-2.5'
-                        className='bg-gray-900 mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-8' 
-                        style={{width: '20rem'}}
-                        type='email'
-                        placeholder='email'
-                    />
-                    
-                    {
-                        isLogin && 
-                        <Input 
-                            icon={<RiUserLine />}
-                            iconClass='top-2.5 left-2.5'
-                            className='bg-gray-900 mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-8' 
-                            style={{width: '20rem'}}
-                            type='text'
-                            placeholder='name'
-                        />
-                    }
-                    
-                    <Input 
-                        icon={<RiLockPasswordLine />}
-                        iconClass='top-2.5 left-2.5'
-                        className='bg-gray-900 mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-8' 
-                        style={{width: '20rem'}}
-                        type='password' 
-                        placeholder='password'
-                    />
+			<Input
+				icon={<MdAlternateEmail />}
+				iconClass='top-2.5 left-2.5'
+				className='mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
+				style={{ width: '30rem' }}
+				type='email'
+				placeholder='email'
+			/>
 
-                    <Button
-                        className='text-slate-500 mb-5 hover:text-slate-400'
-                        onClick={switchAuthModeHandler}
-                        type='button'
-                    >
-                        {isLogin ? 'Already have an account?' : "Don't have an account?"}
-                    </Button>
+			{isLogin && (
+				<Input
+					icon={<RiUserLine />}
+					iconClass='top-2.5 left-2.5'
+					className='mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
+					style={{ width: '30rem' }}
+					type='text'
+					placeholder='name'
+				/>
+			)}
 
-                    <Link
-                        to='/all-boards'
-                        className='rounded-3xl px-6 py-2 text-white bg-gradient-to-r from-rose-600 to-indigo-900 hover:from-rose-500 hover:to-indigo-800 text-black font-bold'
-                    >
-                        {isLogin ? 'SIGNUP' : 'LOGIN'}
-                    </Link>
-                </div>
-            </div>
-        </div>
-    )
-}
+			<Input
+				icon={<RiLockPasswordLine />}
+				iconClass='top-2.5 left-2.5'
+				className='mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
+				style={{ width: '30rem' }}
+				type='password'
+				placeholder='password'
+			/>
+
+			<Button
+				className='text-slate-500 mb-5 hover:text-slate-400'
+				onClick={switchAuthModeHandler}
+				type='button'
+			>
+				{isLogin
+					? 'Already have an account?'
+					: "Don't have an account?"}
+			</Button>
+
+			<Link
+				to='/all-boards'
+				className='rounded-3xl px-6 py-2 text-white bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-black text-center font-bold'
+			>
+				{isLogin ? 'SIGNUP' : 'LOGIN'}
+			</Link>
+		</div>
+	);
+};
 
 export default AuthForm;
