@@ -1,7 +1,7 @@
 // api'den istek atarak tüm kanbanları çek
-import AllKanbanHeader from '../components/AllKanbanHeader';
-import AllkanbanItem from '../components/AllKanbanItem';
-import AllKanbanSearch from '../components/AllKanbanSearch';
+import AllKanbanHeader from '../components/AllKanban/AllKanbanHeader';
+import AllkanbanItem from '../components/AllKanban/AllKanbanItem';
+import AllKanbanSearch from '../components/AllKanban/AllKanbanSearch';
 
 const DUMMY_DATAS = [
     {

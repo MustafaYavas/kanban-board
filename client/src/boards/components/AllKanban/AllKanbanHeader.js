@@ -1,4 +1,4 @@
-import Select from '../../shared/components/UI/Select';
+import Select from '../../../shared/components/UI/Select';
 
 const DUMMY_OPTIONS = [
     {

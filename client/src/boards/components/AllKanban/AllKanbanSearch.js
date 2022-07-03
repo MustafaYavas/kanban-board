@@ -1,4 +1,4 @@
-import Input from '../../shared/components/UI/Input/Input';
+import Input from '../../../shared/components/UI/Input/Input';
 
 import { FcSearch } from 'react-icons/fc';
 
