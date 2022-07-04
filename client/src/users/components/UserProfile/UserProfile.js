@@ -17,7 +17,7 @@ const DUMMY_FRIENDS = [
 const UserProfile = () => {
     return (
         <>
-            <div className='grid grid-cols-1 md:grid-cols-3 mx-10 mt-10 pt-5 border-t'>
+            <div className='grid grid-cols-1 md:grid-cols-3 mt-10 pt-5 border-t'>
             
                 <div className='flex flex-col justify-center items-center'>
                     <UserInfos 
@@ -34,7 +34,7 @@ const UserProfile = () => {
                 </div>
             </div>
 
-            <div className='grid grid-cols-1 md:grid-cols-3 mx-10 mt-10 pb-5 border-b'>
+            <div className='grid grid-cols-1 md:grid-cols-3 mt-10 pb-5 border-b'>
                 <div></div>
 
                 <div className='col-span-2 shadow-lg px-5 py-1 rounded-lg'>

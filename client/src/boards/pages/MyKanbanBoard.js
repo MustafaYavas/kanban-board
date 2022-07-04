@@ -6,7 +6,7 @@ const DUMMY_TABLES = [
 
 const MyKanbanBoard = () => {
     return (
-        <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mt-10'>
+        <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mt-10 gap-5'>
             {
                 DUMMY_TABLES.map((table, i) => (
                     <BoardTable 

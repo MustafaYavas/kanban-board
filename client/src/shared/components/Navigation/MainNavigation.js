@@ -5,7 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 
 const MainNavigation = () => {
 	return (
-		<div className='flex justify-between items-center mx-10'>
+		<div className='flex justify-between items-center'>
 			<Link to='/' className='flex justify-center items-center'>
 				<img className={styles.logo} src={logo} alt='logo' />
 				<h1 className='font-medium text-lg'>React Kanban</h1>

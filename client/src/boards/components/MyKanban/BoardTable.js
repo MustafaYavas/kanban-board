@@ -6,7 +6,7 @@ const BoardTable = (props) => {
 	const { tableTitle } = props;
 
 	return (
-		<div className='bg-slate-100 mx-10 py-5 mb-5 rounded-lg shadow-2xl'>
+		<div className='bg-slate-100 py-5 mb-5 rounded-lg shadow-lg'>
 			<h1 className='font-semibold text-lg mx-3'>{tableTitle}</h1>
 
 			<BoardTableItem />

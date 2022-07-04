@@ -15,7 +15,7 @@ const NewKanbanForm = () => {
 	};
 
 	return (
-		<div className='flex flex-col justify-center items-center  my-20 py-5 border-y'>
+		<div className='flex flex-col justify-center items-center my-20 py-5 border-y'>
 			<h1 className='text-2xl font-bold mb-5 text-blue-600'>
 				CREATE NEW KANBAN BOARD
 			</h1>
@@ -24,7 +24,7 @@ const NewKanbanForm = () => {
 				<Input
 					icon={<MdOutlineDriveFileRenameOutline />}
 					iconClass='top-2.5 left-2.5'
-					className=' mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-10 focus:border-blue-600'
+					className='mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
 					style={{ width: '30rem' }}
 					type='text'
 					placeholder='Title'
@@ -33,7 +33,7 @@ const NewKanbanForm = () => {
 				<Input
 					icon={<TiGroup />}
 					iconClass='top-2.5 left-2.5'
-					className='mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-10 focus:border-blue-600'
+					className='mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
 					style={{ width: '30rem' }}
 					type='number'
 					min='1'
@@ -44,7 +44,7 @@ const NewKanbanForm = () => {
 				<Input
 					icon={<BsQuestion />}
 					iconClass='top-2.5 left-2.5'
-					className='mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-10 focus:border-blue-600'
+					className='mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
 					style={{ width: '30rem' }}
 					type='text'
 					placeholder='What will you use it for? eg: Personal'
