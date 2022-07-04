@@ -6,18 +6,21 @@ import NewBoard from './boards/pages/NewBoard';
 import MyKanbanBoard from './boards/pages/MyKanbanBoard'
 import Profile from './users/pages/Profile';
 
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const App = () => {
+    const { isLoggedIn } = useSelector(state => state.user);
+
     return (
         <Layout>
             <Routes>
                 <Route path='/' element={<Home />}/>
                 <Route path='/authenticate' element={<Auth />}/>
-                <Route path='/profile' element={<Profile />}/>
-                <Route path='/all-boards' element={<AllKanbanList />}/>
-                <Route path='/boards/new' element={<NewBoard />}/>
-                <Route path='/boards/:id' element={<MyKanbanBoard />}/>
+                <Route path='/profile' element={isLoggedIn ? <Profile /> : <Navigate replace to='/' />}/>
+                <Route path='/all-boards' element={isLoggedIn ? <AllKanbanList /> : <Navigate replace to='/' />}/>
+                <Route path='/boards/new' element={isLoggedIn ? <NewBoard /> : <Navigate replace to='/' />}/>
+                <Route path='/boards/:id' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
             </Routes>
         </Layout>
     )
