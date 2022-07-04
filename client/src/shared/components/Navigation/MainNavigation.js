@@ -13,6 +13,13 @@ const MainNavigation = () => {
 
 			<div className={styles.links}>
 				<NavLink
+					to='/profile'
+					className={ (navData) => navData.isActive ? 'border-b-2 border-blue-600' : '' }
+				>
+					Profile
+				</NavLink>
+
+				<NavLink
 					to='/boards/1'
 					className={ (navData) => navData.isActive ? 'border-b-2 border-blue-600' : '' }
 				>

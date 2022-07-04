@@ -1,4 +1,4 @@
-import Header from '../Navigation/MainNavigation'
+import Header from '../navigation/MainNavigation'
 
 const Layout = (props) => {
     const { children } = props
