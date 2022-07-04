@@ -1,22 +1,26 @@
 import Input from '../../../shared/components/UI/Input/Input';
+import Button from '../../../shared/components/UI/Button';
 
 import { MdOutlineDriveFileRenameOutline } from 'react-icons/md';
 import { TiGroup } from 'react-icons/ti';
 import { BsQuestion } from 'react-icons/bs';
-import Button from '../../../shared/components/UI/Button';
+import { useNavigate } from 'react-router-dom';
 
 const NewKanbanForm = () => {
+	const navigate = useNavigate();
+
 	const createKanbanHandler = (e) => {
 		e.preventDefault();
+		navigate('/boards/1', {replace: true})
 	};
 
 	return (
 		<div className='flex flex-col justify-center items-center  my-20 py-5 border-y'>
 			<h1 className='text-2xl font-bold mb-5 text-blue-600'>
-				Create New Kanban Board
+				CREATE NEW KANBAN BOARD
 			</h1>
 
-			<form className='rounded-lg'>
+			<form onSubmit={createKanbanHandler}>
 				<Input
 					icon={<MdOutlineDriveFileRenameOutline />}
 					iconClass='top-2.5 left-2.5'
@@ -49,8 +53,7 @@ const NewKanbanForm = () => {
 				<div className='flex justify-center'>
 					<Button
 						type='submit'
-						className='rounded-3xl px-6 py-2 text-white bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-black text-center font-bold'
-						onClick={createKanbanHandler}
+						className='rounded-3xl px-6 py-2 text-white bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-300 hover:to-blue-400  text-black text-center font-bold'
 					>
 						CREATE
 					</Button>
