@@ -25,7 +25,7 @@ const DUMMY_DATAS = [
 
 const AllKanbanList = () => {
     return (
-        <div className='m-10'> 
+        <div> 
             <AllKanbanSearch />
             <AllKanbanHeader length={DUMMY_DATAS.length} />
             {

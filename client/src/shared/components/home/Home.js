@@ -1,11 +1,14 @@
 import banner from '../../../assets/banner.png';
 
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
 const Home = () => {
+    const {isLoggedIn} = useSelector(state => state.user);
+
     return (
         <div className='grid grid-cols-1 sm:grid-cols-2'>
-            <div className='flex flex-col justify-center items-start ml-10'>
+            <div className='flex flex-col justify-center items-start'>
                 <h1 className='text-8xl text-blue-600 font-bold'>Kanban</h1>
                 <h3 className='text-4xl text-blue-600 font-bold pb-16 '>Visualize your workflow</h3>
 
@@ -18,7 +21,7 @@ const Home = () => {
 
                     <div className='flex justify-start items-center'>
                         <Link
-                            to='/authenticate'
+                            to={!isLoggedIn ? '/authenticate' : '/all-boards'}
                             className='rounded-3xl px-6 py-2 mt-6 text-white bg-gradient-to-r from-blue-600 to-sky-400 mr-10'
                         >
                             Get Started 
