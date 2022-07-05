@@ -47,7 +47,7 @@ const AuthForm = () => {
 	return (
 		<div className='flex flex-col justify-center items-center my-20 py-5 border-y'>
 			<h1 className='text-2xl font-bold mb-5 text-blue-600'>
-				{isLogin ? 'USER LOGIN' : 'USER SIGNUp'}
+				{isLogin ? 'USER LOGIN' : 'USER SIGNUP'}
 			</h1>
 
 			<form onSubmit={authHandler}>

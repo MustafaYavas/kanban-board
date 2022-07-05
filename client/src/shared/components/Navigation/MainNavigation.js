@@ -55,7 +55,6 @@ const MainNavigation = () => {
 						<Link
 							to='/'
 							onClick={logoutHandler}
-							className={ (navData) => navData.isActive ? 'border-b-2 border-blue-600' : '' }
 						>
 							Logout
 						</Link>
