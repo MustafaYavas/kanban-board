@@ -1,20 +1,34 @@
-import { controllers } from '../controllers/boards-controllers.js';
+import { boardsController } from '../controllers/boards-controller.js';
 
 import express from 'express';
+import { check } from 'express-validator';
 
 const router = express.Router();
 
 
-router.get('/all-boards', controllers.getAllBoards);
+router.get('/all-boards', boardsController.getAllBoards);
 
-router.get('/:bid', controllers.getBoardById);
+router.get('/:bid', boardsController.getBoardById);
 
-router.get('/user/:uid', controllers.getBoardsByUserId);
+router.get('/user/:uid', boardsController.getBoardsByUserId);
 
-router.post('/', controllers.createBoard);
+router.post('/', 
+    [
+        check('title').trim().notEmpty(),
+        check('numberOfParticipants').not().isEmpty(),
+        check('usageArea').isLength({ min: 5 })
+    ] , 
+    boardsController.createBoard
+);
 
-router.patch('/:bid', controllers.updateBoardById);
+router.patch('/:bid', 
+    [
+        check('title').trim().notEmpty(),
+        check('usageArea').isLength({ min: 5 })
+    ] ,
+    boardsController.updateBoardById
+);
 
-router.delete('/:bid', controllers.deleteBoardById);
+router.delete('/:bid', boardsController.deleteBoardById);
 
 export default router;

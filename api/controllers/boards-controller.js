@@ -1,6 +1,7 @@
 import HttpError from '../models/http-error.js';
 
 import { v4 as uuidv4 } from 'uuid';
+import { validationResult } from 'express-validator';
 
 let DUMMY_BOARDS = [
     {
@@ -49,8 +50,13 @@ const getBoardsByUserId = (req, res, next) => {       // get a specific board by
 }
 
 const createBoard = (req, res, next) => {       // create a new board
+    const error = validationResult(req);
+    if(!error.isEmpty()) {
+        throw new HttpError('Invalid inputs passed, please check your data!', 422);
+    }
+
     const { title, numberOfParticipants, usageArea, owner } = req.body;
-    const createdBoard = {
+    const newBoard = {
         id: uuidv4(),
         title,
         numberOfParticipants,
@@ -59,12 +65,17 @@ const createBoard = (req, res, next) => {       // create a new board
         createDate: new Date().toLocaleDateString()
     }
 
-    DUMMY_BOARDS.push(createdBoard);
+    DUMMY_BOARDS.push(newBoard);
 
-    res.status(201).json({ board: createdBoard });
+    res.status(201).json({ board: newBoard });
 };
 
 const updateBoardById = (req, res, next) => {       // update board by id
+    const error = validationResult(req);
+    if(!error.isEmpty()) {
+        throw new HttpError('Invalid inputs passed, please check your data!', 422);
+    }
+
     const { title, usageArea } = req.body;
     const boardId = req.params.bid;
 
@@ -80,12 +91,17 @@ const updateBoardById = (req, res, next) => {       // update board by id
 
 const deleteBoardById = (req, res, next) => {       // delete board by id
     const boardId = req.params.bid;
+
+    if(!DUMMY_BOARDS.find(b => b.id === boardId)) {
+        throw new HttpError('Could not find a board for that id!', 404);
+    }
+
     DUMMY_BOARDS = DUMMY_BOARDS.filter(b => b.id !== boardId);
 
     res.status(200).json({ message: 'Deleted board' });
 };
 
-export const controllers = {
+export const boardsController = {
     getAllBoards, 
     getBoardById, 
     getBoardsByUserId, 

@@ -1,4 +1,5 @@
 import boardsRoutes from './routes/boards-routes.js';   // boardsRoutes is a kind of middleware
+import usersRoutes from './routes/users-routes.js';
 import HttpError from './models/http-error.js';
 
 import express from 'express';
@@ -12,6 +13,7 @@ This will parse any incoming requests body and extract any JSON data which is in
 */
 
 app.use('/api/boards', boardsRoutes);  // -----> /api/boards/...
+app.use('/api/users', usersRoutes);  // -----> /api/users/...
 
 
 // if it doesn't match any route
