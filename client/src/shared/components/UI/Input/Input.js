@@ -1,12 +1,12 @@
 import styles from "./Input.module.css";
 
 const Input = (props) => {
-	const { label, icon, className, onChange, value, iconClass, style, type, min, max, placeholder } = props;
+	const { label, icon, className, onChange, value, iconClass, style, type, min, max, placeholder, error, errorText } = props;
 
 	return (
 		<>
 			{label && 
-				<div className='my-1 font-semibold'>
+				<div className='mb-2 mt-4 font-semibold'>
 					<label>{label}</label>
 				</div>
 			}
@@ -22,6 +22,9 @@ const Input = (props) => {
 					max={max}
 					placeholder={placeholder}
 				/>
+				{
+					error && <p className='text-sm text-red-600 ml-3 mb-5'>{errorText}</p>
+				}
 			</div>
 		</>
 	);

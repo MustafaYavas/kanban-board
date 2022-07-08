@@ -6,7 +6,7 @@ import Input from '../../shared/components/UI/Input/Input';
 import { MdOutlineDriveFileRenameOutline } from 'react-icons/md';
 import { BsQuestion } from 'react-icons/bs';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const DUMMY_TABLES = [
     'Backlog', 'In Progress', 'Review', 'Complete'
@@ -16,6 +16,8 @@ const MyKanbanBoard = () => {
     const [showModal, setShowModal] = useState(false);
     const [title, setTitle] = useState('');
     const [usageArea, setUsageArea] = useState('');
+	const [isTouched, setIsTouched] = useState(false);
+	const [formError, setFormError] = useState(true);
 
     const showModalHandler = () => {
         setShowModal(true);
@@ -23,7 +25,26 @@ const MyKanbanBoard = () => {
 
     const closeModalHandler = () => {
         setShowModal(false);
+        setTitle('');
+        setUsageArea('');
+        setIsTouched(false);
+        setFormError(true)
     }
+
+    const changeTitleHandler = (e) => {
+        setTitle(e.target.value);
+        setIsTouched(true);
+    }
+
+    const changeUsageHandler = (e) => {
+        setUsageArea(e.target.value);
+        setIsTouched(true);
+    }
+
+    useEffect(() => {
+        if(title.length === 0 || usageArea.length < 5) return setFormError(true);
+        setFormError(false)
+    }, [title.length, usageArea.length])
 
     return (
         <div className='mt-5'>
@@ -39,30 +60,35 @@ const MyKanbanBoard = () => {
                 show={showModal} 
                 closeHandler={closeModalHandler} 
                 modalTitle='Update Kanban Board'
+                formError={formError}
                 inputs={
                     <>
                         <Input
                             label='Kanban Title'
                             icon={<MdOutlineDriveFileRenameOutline />}
                             iconClass='top-2.5 left-2.5'
-                            className='mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
-                            onChange={(e) => {setTitle(e.target.value)}}
+                            className='mb-1 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
+                            onChange={changeTitleHandler}
                             value={title}
                             style={{ width: '21rem' }}
                             type='text'
                             placeholder='Title'
+                            error={isTouched && title.length === 0}
+                            errorText='Can not be empty!'
                         />
 
                         <Input
                             label='Usage Area'
                             icon={<BsQuestion />}
                             iconClass='top-2.5 left-2.5'
-                            className='mb-5 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
-                            onChange={(e) => {setUsageArea(e.target.value)}}
+                            className='mb-1 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
+                            onChange={changeUsageHandler}
                             value={usageArea}
                             style={{ width: '21rem' }}
                             type='text'
                             placeholder='What will you use it for? eg: Personal'
+                            error={isTouched && usageArea.length < 5}
+                            errorText='Can not be less than 5 characters!'
                         />
                     </>
                 }
