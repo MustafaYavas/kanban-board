@@ -1,12 +1,12 @@
 import styles from "./Input.module.css";
 
 const Input = (props) => {
-	const {label, icon, className, onChange, value, iconClass, style, type, min, max, placeholder } = props;
+	const { label, icon, className, onChange, value, iconClass, style, type, min, max, placeholder } = props;
 
 	return (
 		<>
 			{label && 
-				<div className='text-center'>
+				<div className='my-1 font-semibold'>
 					<label>{label}</label>
 				</div>
 			}
