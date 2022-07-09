@@ -15,7 +15,7 @@ router.get('/user/:uid', boardsController.getBoardsByUserId);
 router.post('/', 
     [
         check('title').trim().notEmpty(),
-        check('numberOfParticipants').not().isEmpty(),
+        check('numberOfMembers').not().isEmpty(),
         check('usageArea').isLength({ min: 5 })
     ] , 
     boardsController.createBoard

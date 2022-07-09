@@ -3,9 +3,11 @@ import usersRoutes from './routes/users-routes.js';
 import HttpError from './models/http-error.js';
 
 import express from 'express';
+import mongoose from 'mongoose';
+import 'dotenv/config';
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.use(express.json());
 /*
@@ -30,8 +32,14 @@ app.use((error, req, res, next) => {
 
     res.status(error.code || 500);
     res.json({message: error.message || 'An unknown error occured!'});
-})
+});
 
-app.listen(port, () => {
-	console.log(`Server is up on port: ${port}`);
+mongoose.connect(process.env.MONGO_CONNECT_STRING)
+.then(() => {
+    app.listen(port, () => {
+        console.log(`Server is up on port: ${port}`);
+    });
+})
+.catch(err => {
+    console.log(err);
 });
