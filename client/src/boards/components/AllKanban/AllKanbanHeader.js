@@ -12,8 +12,8 @@ const DUMMY_OPTIONS = [
     },
 
     {
-        value: 'mostParticipants',
-        text: 'Most Participant'
+        value: 'mostMembers',
+        text: 'Most Members'
     },
 ]
 

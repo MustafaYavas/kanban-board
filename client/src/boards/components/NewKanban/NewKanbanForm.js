@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 const NewKanbanForm = () => {
 	const navigate = useNavigate();
 	const [title, setTitle] = useState('');
-	const [participantsNumber, setParticipantsNumber] = useState('');
+	const [MembersNumber, setMembersNumber] = useState('');
 	const [usageArea, setUsageArea] = useState('');
 	const [formError, setFormError] = useState(true);
 	const [isTouched, setIsTouched] = useState(false);
@@ -21,17 +21,17 @@ const NewKanbanForm = () => {
 	};
 
 	useEffect(() => {
-		if(title.length < 5 || participantsNumber.length === 0 || usageArea.length < 5) setFormError(true);
+		if(title.length < 5 || MembersNumber.length === 0 || usageArea.length < 5) setFormError(true);
 		else setFormError(false);
-	}, [title, participantsNumber, usageArea, formError]);
+	}, [title, MembersNumber, usageArea, formError]);
 
 	const changeTitleHandler = (e) => {
 		setTitle(e.target.value);
 		setIsTouched(true);
 	}
 
-	const changeParticipantsHandler = (e) => {
-		setParticipantsNumber(e.target.value);
+	const changeMembersHandler = (e) => {
+		setMembersNumber(e.target.value);
 		setIsTouched(true);
 	}
 	
@@ -64,14 +64,14 @@ const NewKanbanForm = () => {
 					icon={<TiGroup />}
 					iconClass='top-2.5 left-2.5'
 					className='mb-1 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
-					onChange={changeParticipantsHandler}
-					value={participantsNumber}
+					onChange={changeMembersHandler}
+					value={MembersNumber}
 					style={{ width: '30rem' }}
 					type='number'
 					min='0'
 					max='20'
-					placeholder='Number of Participants'
-					error={isTouched && participantsNumber.length === 0}
+					placeholder='Number of Members'
+					error={isTouched && MembersNumber.length === 0}
 					errorText='Can not be empty!'
 				/>
 

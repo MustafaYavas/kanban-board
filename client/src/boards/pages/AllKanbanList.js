@@ -9,7 +9,7 @@ const DUMMY_DATAS = [
         title: 'Kanban Deneme 1',
         usageArea: 'Software',
         owner: 'Mustafa',
-        numberOfParticipants: 8,
+        numberOfMembers: 8,
         createDate: '02/07/2022'
     },
 
@@ -18,7 +18,7 @@ const DUMMY_DATAS = [
         title: 'Kanban Deneme 2',
         usageArea: 'Wearable Technology',
         owner: 'Murat',
-        numberOfParticipants: 12,
+        numberOfMembers: 12,
         createDate: '01/07/2022'
     }
 ]
@@ -35,7 +35,7 @@ const AllKanbanList = () => {
                         title={data.title}
                         usageArea={data.usageArea}
                         owner={data.owner}
-                        numberOfParticipants={data.numberOfParticipants}
+                        numberOfMembers={data.numberOfMembers}
                         createDate={data.createDate}
                     />
                 ))
