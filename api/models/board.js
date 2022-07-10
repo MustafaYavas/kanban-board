@@ -6,7 +6,7 @@ const boardSchema = new Schema({
     title: { type: String, required: true },
     usageArea: { type: String, required: true },
     numberOfMembers: { type: Number, required: true },
-    owner: { type: String, required: true },
+    owner: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
     boardPassword: { type: String, required: true },
     createDate: { type: String, required: true }
 });
