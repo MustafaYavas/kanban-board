@@ -28,7 +28,7 @@ const MyKanbanBoard = () => {
         setTitle('');
         setUsageArea('');
         setIsTouched(false);
-        setFormError(true)
+        setFormError(true);
     }
 
     const changeTitleHandler = (e) => {
@@ -45,6 +45,10 @@ const MyKanbanBoard = () => {
         if(title.length === 0 || usageArea.length < 5) return setFormError(true);
         setFormError(false)
     }, [title.length, usageArea.length])
+
+    const updateHandler = () => {
+
+    }
 
     return (
         <div className='mt-5'>
@@ -92,6 +96,8 @@ const MyKanbanBoard = () => {
                         />
                     </>
                 }
+                modalFunc={updateHandler}
+                buttonText='Update'
             />
 
             <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mt-5 gap-5'>

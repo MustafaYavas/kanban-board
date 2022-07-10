@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { MdOutlineDriveFileRenameOutline } from 'react-icons/md';
 import { TiGroup } from 'react-icons/ti';
 import { BsQuestion } from 'react-icons/bs';
+import { RiLockPasswordLine } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom';
 
 const NewKanbanForm = () => {
@@ -12,6 +13,7 @@ const NewKanbanForm = () => {
 	const [title, setTitle] = useState('');
 	const [MembersNumber, setMembersNumber] = useState('');
 	const [usageArea, setUsageArea] = useState('');
+	const [boardPassword, setBoardPassword] = useState('');
 	const [formError, setFormError] = useState(true);
 	const [isTouched, setIsTouched] = useState(false);
 
@@ -37,6 +39,11 @@ const NewKanbanForm = () => {
 	
 	const changeUsageHandler = (e) => {
 		setUsageArea(e.target.value);
+		setIsTouched(true);
+	}
+
+	const changePasswordHandler = (e) => {
+		setBoardPassword(e.target.value);
 		setIsTouched(true);
 	}
 
@@ -85,7 +92,20 @@ const NewKanbanForm = () => {
 					type='text'
 					placeholder='What will you use it for? eg: Personal'
 					error={isTouched && usageArea.length < 5}
-					errorText='Can not be empty!'
+					errorText='Can not be less than 5 characters!'
+				/>
+
+				<Input
+					icon={<RiLockPasswordLine />}
+					iconClass='top-2.5 left-2.5'
+					className='mb-1 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
+					onChange={changePasswordHandler}
+					value={boardPassword}
+					style={{ width: '30rem' }}
+					type='password'
+					placeholder='Password'
+					error={isTouched && boardPassword.length < 5}
+					errorText='Can not be less than 5 characters!'
 				/>
 
 				<div className='flex justify-center'>

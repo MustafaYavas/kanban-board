@@ -3,10 +3,10 @@ import { Fragment } from 'react';
 import Button from './Button';
 
 const Modal = (props) => {
-    const { show, closeHandler, formError, inputs, modalTitle } = props;
+    const { show, closeHandler, formError, inputs, modalTitle, modalFunc, buttonText } = props;
 
-    const updateHandler = () => {
-		// update kanban
+    const clickHandler = () => {
+		modalFunc();
         closeHandler();
     }
 
@@ -53,10 +53,10 @@ const Modal = (props) => {
 										<Button
 											type='button'
 											className={`inline-flex justify-center rounded-md border border-transparent  px-4 py-2 mr-5 text-sm font-medium ${formError ? 'bg-slate-300' : 'bg-blue-100 text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'}`}
-											onClick={updateHandler}
+											onClick={clickHandler}
 											disabled={formError}
 										>
-											Update
+											{buttonText}
 										</Button>
 
                                         <Button
