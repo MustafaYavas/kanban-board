@@ -24,6 +24,7 @@ const App = () => {
                 <Route path='/boards/:id' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
                 <Route path='/boards/:id/update' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
                 <Route path='/boards/:id/members' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
+                <Route path='/boards/:id/add-task' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
             </Routes>
         </Layout>
     )
