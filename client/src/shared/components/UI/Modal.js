@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import Button from './Button';
 
 const Modal = (props) => {
-    const { show, closeHandler, formError, inputs, modalTitle, modalFunc, buttonText } = props;
+    const { show, closeHandler, formError, content, modalTitle, modalFunc, buttonText } = props;
 
     const clickHandler = () => {
 		modalFunc();
@@ -46,18 +46,21 @@ const Modal = (props) => {
 									</Dialog.Title>
                                     
 									<div className='mt-4'>
-                                        { inputs }
+                                        { content }
 									</div>
 
 									<div className='mt-2'>
-										<Button
-											type='button'
-											className={`inline-flex justify-center rounded-md border border-transparent  px-4 py-2 mr-5 text-sm font-medium ${formError ? 'bg-slate-300' : 'bg-blue-100 text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'}`}
-											onClick={clickHandler}
-											disabled={formError}
-										>
-											{buttonText}
-										</Button>
+										{
+											buttonText && 
+											<Button
+												type='button'
+												className={`inline-flex justify-center rounded-md border border-transparent  px-4 py-2 mr-5 text-sm font-medium ${formError ? 'bg-slate-300' : 'bg-blue-100 text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'}`}
+												onClick={clickHandler}
+												disabled={formError}
+											>
+												{buttonText}
+											</Button>
+										}
 
                                         <Button
 											type='button'

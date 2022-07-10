@@ -44,7 +44,7 @@ const AllkanbanItem = (props) => {
                 closeHandler={closeModalHandler} 
                 modalTitle='Enter Kanban Board Password'
                 formError={formError}
-                inputs={
+                content={
                     <Input
                         label='Kanban Password'
                         icon={<RiLockPasswordLine />}
