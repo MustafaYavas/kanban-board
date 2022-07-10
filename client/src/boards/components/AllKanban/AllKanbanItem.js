@@ -3,7 +3,8 @@ import Modal from '../../../shared/components/UI/Modal';
 import Input from '../../../shared/components/UI/Input/Input';
 
 import { useEffect, useState } from 'react';
-import { RiLockPasswordLine } from 'react-icons/ri'
+import { RiLockPasswordLine } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 
 const AllkanbanItem = (props) => {
     const { title, usageArea, owner, numberOfMembers, createDate } = props;
@@ -11,9 +12,11 @@ const AllkanbanItem = (props) => {
     const [password, setPassword] = useState('');
 	const [isTouched, setIsTouched] = useState(false);
 	const [formError, setFormError] = useState(true);
+    const navigate = useNavigate();
 
     const showModalHandler = () => {
         setShowModal(true);
+        navigate('/all-boards/join');
     }
 
     const closeModalHandler = () => {
@@ -21,6 +24,7 @@ const AllkanbanItem = (props) => {
         setIsTouched(false);     
         setFormError(true);   
         setPassword('');
+        navigate('/all-boards');
     }
 
     const changePasswordHandler = (e) => {

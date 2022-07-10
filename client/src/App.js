@@ -19,6 +19,7 @@ const App = () => {
                 <Route path='/authenticate' element={<Auth />}/>
                 <Route path='/profile' element={isLoggedIn ? <Profile /> : <Navigate replace to='/' />}/>
                 <Route path='/all-boards' element={isLoggedIn ? <AllKanbanList /> : <Navigate replace to='/' />}/>
+                <Route path='/all-boards/join' element={isLoggedIn ? <AllKanbanList /> : <Navigate replace to='/' />}/>
                 <Route path='/boards/new' element={isLoggedIn ? <NewBoard /> : <Navigate replace to='/' />}/>
                 <Route path='/boards/:id' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
                 <Route path='/boards/:id/update' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
