@@ -16,7 +16,8 @@ router.post('/',
     [
         check('title').trim().notEmpty(),
         check('numberOfMembers').not().isEmpty(),
-        check('usageArea').isLength({ min: 5 })
+        check('usageArea').isLength({ min: 5 }),
+        check('boardPassword').isLength({ min: 5 }),
     ] , 
     boardsController.createBoard
 );

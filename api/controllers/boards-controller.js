@@ -55,12 +55,13 @@ const createBoard = async(req, res, next) => {       // create a new board
         throw new HttpError('Invalid inputs passed, please check your data!', 422);
     }
 
-    const { title, usageArea, numberOfMembers, owner } = req.body;
+    const { title, usageArea, numberOfMembers, owner, boardPassword } = req.body;
     const newBoard = new Board({
         title,
         usageArea,
         numberOfMembers,
         owner,
+        boardPassword,
         createDate: new Date().toLocaleDateString()
     })
 

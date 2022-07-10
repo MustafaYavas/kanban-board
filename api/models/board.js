@@ -7,6 +7,7 @@ const boardSchema = new Schema({
     usageArea: { type: String, required: true },
     numberOfMembers: { type: Number, required: true },
     owner: { type: String, required: true },
+    boardPassword: { type: String, required: true },
     createDate: { type: String, required: true }
 });
 
