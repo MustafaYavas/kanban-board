@@ -61,7 +61,8 @@ const signup = async(req, res, next) => {
         email,
         password,
         image: 'https://picsum.photos/id/237/200/300',
-        boards: []
+        ownBoards: [],
+        memberBoards: []
     }) 
 
     try {

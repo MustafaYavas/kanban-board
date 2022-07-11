@@ -12,6 +12,13 @@ router.get('/:bid', boardsController.getBoardById);
 
 router.get('/user/:uid', boardsController.getBoardsByUserId);
 
+router.get('/boards/:bid/members', boardsController.getMembersOfBoard);
+
+router.post('/boards/:bid/add-task',
+    check('task').not().isEmpty(),
+    boardsController.addTaskToBoard
+);
+
 router.post('/', 
     [
         check('title').trim().notEmpty(),
@@ -20,6 +27,11 @@ router.post('/',
         check('boardPassword').isLength({ min: 5 }),
     ] , 
     boardsController.createBoard
+);
+
+router.post('/all-boards/join', 
+    check('boardPassword').isLength({ min: 5 }),
+    boardsController.joinBoardById
 );
 
 router.patch('/:bid', 
