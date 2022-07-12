@@ -17,14 +17,14 @@ const App = () => {
             <Routes>
                 <Route path='/' element={<Home />}/>
                 <Route path='/authenticate' element={<Auth />}/>
-                <Route path='/profile' element={isLoggedIn ? <Profile /> : <Navigate replace to='/' />}/>
+                <Route path='/:username' element={isLoggedIn ? <Profile /> : <Navigate replace to='/' />}/>
                 <Route path='/all-boards' element={isLoggedIn ? <AllKanbanList /> : <Navigate replace to='/' />}/>
                 <Route path='/all-boards/join' element={isLoggedIn ? <AllKanbanList /> : <Navigate replace to='/' />}/>
                 <Route path='/boards/new' element={isLoggedIn ? <NewBoard /> : <Navigate replace to='/' />}/>
-                <Route path='/boards/:id' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
-                <Route path='/boards/:id/update' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
-                <Route path='/boards/:id/members' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
-                <Route path='/boards/:id/add-task' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
+                <Route path='/boards/:bid' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
+                <Route path='/boards/:bid/update' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
+                <Route path='/boards/:bid/members' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
+                <Route path='/boards/:bid/add-task' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
             </Routes>
         </Layout>
     )

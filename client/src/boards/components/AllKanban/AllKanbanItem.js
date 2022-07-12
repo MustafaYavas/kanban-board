@@ -5,16 +5,22 @@ import Input from '../../../shared/components/UI/Input/Input';
 import { useEffect, useState } from 'react';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import ErrorLayout from '../../../shared/components/UI/ErrorLayout';
 
 const AllkanbanItem = (props) => {
-    const { title, usageArea, owner, numberOfMembers, createDate } = props;
+    const { id, title, usageArea, creatorName, membersNumber, createDate, boardPassword } = props;
     const [showModal, setShowModal] = useState(false);
     const [password, setPassword] = useState('');
 	const [isTouched, setIsTouched] = useState(false);
 	const [formError, setFormError] = useState(true);
+	const [error, setError] = useState();
     const navigate = useNavigate();
-
+    const user = useSelector(state => state.user).user.username;
+    
     const showModalHandler = () => {
+        setError();
+        if(creatorName === user) return navigate(`/boards/${id}`)
         setShowModal(true);
         navigate('/all-boards/join');
     }
@@ -38,11 +44,19 @@ const AllkanbanItem = (props) => {
     }, [password]);
 
     const enterBoardHandler = () => {
-
+        if(password === boardPassword) {
+            navigate(`/boards/${id}`)
+        } else {
+            navigate('/all-boards');
+            setTimeout(() => {
+                setError('Wrong password. Please try again!');
+            }, [500])
+        }
     }
 
     return (
         <>  
+            <ErrorLayout error={error} />
             <Modal 
                 show={showModal} 
                 closeHandler={closeModalHandler} 
@@ -70,9 +84,9 @@ const AllkanbanItem = (props) => {
                 <p className='text-2xl font-semibold'>{title}</p>
                 <p className='font-medium'>{usageArea}</p>
                 <div className='text-gray-600 flex flex-row font-medium'>
-                    <p className='mr-5'>{owner}</p>
+                    <p className='mr-5'>{creatorName}</p>
                     &bull;
-                    <p className='mx-5'>{numberOfMembers}</p>
+                    <p className='mx-5'>{membersNumber}</p>
                     &bull;
                     <p className='ml-5'>{createDate}</p>
                 </div>

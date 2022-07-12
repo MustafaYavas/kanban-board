@@ -6,13 +6,12 @@ import { Link, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 const MainNavigation = () => {
-	const { isLoggedIn } = useSelector(state => state.user);
+	const user = useSelector(state => state.user);
 	const dispatch = useDispatch();
-
 	const logoutHandler = () => {
 		dispatch(userActions.logoutHandler());
 	}
-
+	
 	return (
 		<div className='flex justify-between items-center'>
 			<Link to='/' className='flex justify-center items-center'>
@@ -22,21 +21,24 @@ const MainNavigation = () => {
 
 			<div className={styles.links}>
 				{
-					isLoggedIn && 
+					user.isLoggedIn && 
 					<>
 						<NavLink
-							to='/profile'
+							to={`/${user.user.username}`}
 							className={ (navData) => navData.isActive ? 'border-b-2 border-blue-600' : '' }
 						>
 							Profile
 						</NavLink>
 
-						<NavLink
-							to='/boards/1'
-							className={ (navData) => navData.isActive ? 'border-b-2 border-blue-600' : '' }
-						>
-							My kanban
-						</NavLink>
+						{
+							user.user.memberBoards.length > 0 &&
+							<NavLink
+								to={`/boards/${user.user.memberBoards[0]}`}
+								className={ (navData) => navData.isActive ? 'border-b-2 border-blue-600' : '' }
+							>
+								My kanban
+							</NavLink>
+						}
 
 						<NavLink
 							to='/all-boards'
@@ -62,7 +64,7 @@ const MainNavigation = () => {
 				}
 
 				{
-					!isLoggedIn &&
+					!user.isLoggedIn &&
 					<NavLink
 						to='/authenticate'
 						className={ (navData) => navData.isActive ? 'border-b-2 border-blue-600' : '' }

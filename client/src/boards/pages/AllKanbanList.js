@@ -1,46 +1,57 @@
-// api'den istek atarak tüm kanbanları çek
 import AllKanbanHeader from '../components/AllKanban/AllKanbanHeader';
 import AllkanbanItem from '../components/AllKanban/AllKanbanItem';
 import AllKanbanSearch from '../components/AllKanban/AllKanbanSearch';
+import LoadingSpinner from '../../shared/components/UI/Spinner/LoadingSpinner';
+import ErrorLayout from '../../shared/components/UI/ErrorLayout';
 
-const DUMMY_DATAS = [
-    {
-        id: 1,
-        title: 'Kanban Deneme 1',
-        usageArea: 'Software',
-        owner: 'Mustafa',
-        numberOfMembers: 8,
-        createDate: '02/07/2022'
-    },
-
-    {
-        id: 2,
-        title: 'Kanban Deneme 2',
-        usageArea: 'Wearable Technology',
-        owner: 'Murat',
-        numberOfMembers: 12,
-        createDate: '01/07/2022'
-    }
-]
+import { useEffect, useState } from 'react';
 
 const AllKanbanList = () => {
-    return (
-        <div> 
-            <AllKanbanSearch />
-            <AllKanbanHeader length={DUMMY_DATAS.length} />
-            {
-                DUMMY_DATAS.map(data => (
-                    <AllkanbanItem 
-                        key={data.id}
-                        title={data.title}
-                        usageArea={data.usageArea}
-                        owner={data.owner}
-                        numberOfMembers={data.numberOfMembers}
-                        createDate={data.createDate}
-                    />
-                ))
+    const [allBoards, setAllBoards] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
+
+    useEffect(() => {
+        const fetchDatas = async() => {
+            setIsLoading(true);
+            try {
+                const response = await fetch('http://localhost:5000/api/boards/all-boards');
+                const responseData = await response.json();
+                if(!response.ok) {
+                    throw new Error(responseData.message);
+                } 
+                setAllBoards(responseData);
+            } catch (error) {
+                setError('Something went wrong while fetching board datas. Please try again later!');
             }
-        </div>
+            setIsLoading(false);
+        }
+        fetchDatas();
+    }, [])
+    
+    return (
+        <>
+            <ErrorLayout error={error}/>
+            <div> 
+                {isLoading && <LoadingSpinner asOverlay />}
+                <AllKanbanSearch />
+                <AllKanbanHeader length={allBoards.length} />
+                {
+                    allBoards.map(board => (
+                        <AllkanbanItem 
+                            key={board.id}
+                            id={board.id}
+                            title={board.title}
+                            usageArea={board.usageArea}
+                            creatorName={board.creatorName}
+                            membersNumber={board.membersNumber}
+                            createDate={board.createDate}
+                            boardPassword={board.boardPassword}
+                        />
+                    ))
+                }
+            </div>
+        </>
     )
 }
 
