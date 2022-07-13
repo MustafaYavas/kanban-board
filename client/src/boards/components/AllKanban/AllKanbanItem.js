@@ -1,12 +1,12 @@
-// tüm kanbanları listele
 import Modal from '../../../shared/components/UI/Modal';
 import Input from '../../../shared/components/UI/Input/Input';
+import ErrorLayout from '../../../shared/components/UI/ErrorLayout';
 
 import { useEffect, useState } from 'react';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import ErrorLayout from '../../../shared/components/UI/ErrorLayout';
+import { useDispatch, useSelector } from 'react-redux';
+import { userActions } from '../../../shared/store/user-slice';
 
 const AllkanbanItem = (props) => {
     const { id, title, usageArea, creatorName, membersNumber, createDate, boardPassword } = props;
@@ -16,11 +16,12 @@ const AllkanbanItem = (props) => {
 	const [formError, setFormError] = useState(true);
 	const [error, setError] = useState();
     const navigate = useNavigate();
-    const user = useSelector(state => state.user).user.username;
+    const user = useSelector(state => state.user).user;
+    const dispatch = useDispatch();
     
     const showModalHandler = () => {
         setError();
-        if(creatorName === user) return navigate(`/boards/${id}`)
+        if(creatorName === user.username || user.memberBoards.includes(id)) return navigate(`/boards/${id}`);
         setShowModal(true);
         navigate('/all-boards/join');
     }
@@ -43,9 +44,27 @@ const AllkanbanItem = (props) => {
         setFormError(false);
     }, [password]);
 
-    const enterBoardHandler = () => {
+    const enterBoardHandler = async() => {
         if(password === boardPassword) {
-            navigate(`/boards/${id}`)
+            try {
+				const response = await fetch('http://localhost:5000/api/boards/all-boards/join', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({boardId: id, boardPassword: password, userId: user.id})
+				})
+				const responseData = await response.json();
+                if(!response.ok) {
+                    throw new Error(responseData.message);
+                }
+                
+                dispatch(userActions.updateUser(responseData.board.boardId));
+				navigate(`/boards/${id}`);
+			} catch (error) {
+				setError('Something went wrong while signing you up. Please try again later!');
+			}
+            
         } else {
             navigate('/all-boards');
             setTimeout(() => {

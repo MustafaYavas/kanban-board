@@ -22,6 +22,11 @@ const userSlice = createSlice({
         signupHandler(state, action) {
             state.isLoggedIn = true;
             state.user = action.payload;
+        },
+
+        updateUser(state, action) {
+            state.isLoggedIn = true;
+            state.user.memberBoards.push(action.payload);
         }
     }
 });

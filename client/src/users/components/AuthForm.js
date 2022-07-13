@@ -73,7 +73,6 @@ const AuthForm = () => {
 				dispatch(userActions.signupHandler(responseData.user));
 				navigate('/all-boards', {replace: true});
 			} catch (error) {
-				console.log(error);
 				setError('Something went wrong while signing you up. Please try again later!');
 			}
 		}

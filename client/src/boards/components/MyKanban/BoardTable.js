@@ -1,20 +1,32 @@
 import BoardTableItem from './BoardTableItem';
 import AddTask from './Utils/AddTask';
 
-const DUMMY_OPTIONS = [
-    'Low', 'Med', 'High'
+import { useSelector } from 'react-redux';
+
+const TABLES = [
+    'Backlog', 'In Progress', 'Review', 'Complete'
 ]
 
 const BoardTable = (props) => {
-	const { tableTitle, tables } = props;
-
+	const board = useSelector(state => state.board).board;
 	return (
-		<div className='bg-slate-100 py-5 mb-5 rounded-lg shadow-lg'>
-			<h1 className='font-semibold text-lg mx-3'>{tableTitle}</h1>
-
-			<BoardTableItem />
-			<AddTask tables={tables} options={DUMMY_OPTIONS}/>
-		</div>
+		<>
+			{
+				TABLES.map(t => (
+					<div className='bg-slate-100 py-5 mb-5 rounded-lg shadow-lg'>
+						<h1 className='font-semibold text-lg mx-3'>{t}</h1>
+							{
+								board.tasks.length > 0 && board.tasks.map(task => (
+									t===task.taskTable && <BoardTableItem 
+										task={task}
+									/>
+								))
+							}
+						<AddTask tables={TABLES}/>
+					</div>
+				))
+			}
+		</>
 	);
 };
 

@@ -2,6 +2,7 @@ import Input from '../../../shared/components/UI/Input/Input';
 import Button from '../../../shared/components/UI/Button';
 import LoadingSpinner from '../../../shared/components/UI/Spinner/LoadingSpinner';
 import ErrorLayout from '../../../shared/components/UI/ErrorLayout';
+import { userActions } from '../../../shared/store/user-slice';
 
 import { MdOutlineDriveFileRenameOutline } from 'react-icons/md';
 import { TiGroup } from 'react-icons/ti';
@@ -9,7 +10,7 @@ import { BsQuestion } from 'react-icons/bs';
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const NewKanbanForm = () => {
 	const navigate = useNavigate();
@@ -22,6 +23,7 @@ const NewKanbanForm = () => {
 	const [isTouched, setIsTouched] = useState(false);
 	const [error, setError] = useState();
 	const [isLoading, setIsLoading] = useState(false);
+	const dispatch = useDispatch();
 	
 	const createKanbanHandler = async(e) => {
 		e.preventDefault();
@@ -42,7 +44,8 @@ const NewKanbanForm = () => {
             if(!response.ok) {
                 throw new Error(responseData.message);
             }
-			navigate(`/boards/${responseData.board.id}`, {replace: true})
+			dispatch(userActions.updateUser(responseData.board.id));
+			navigate(`/all-boards`, {replace: true})
 		} catch (error) {
 			setError('Something went wrong while creating new board. Please try againg later!');
 		}

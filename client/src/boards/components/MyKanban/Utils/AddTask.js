@@ -1,26 +1,37 @@
 import Modal from '../../../../shared/components/UI/Modal';
 import Input from '../../../../shared/components/UI/Input/Input';
-import Select from '../../../../shared/components/UI/Select';
+import LoadingSpinner from '../../../../shared/components/UI/Spinner/LoadingSpinner';
+import ErrorLayout from '../../../../shared/components/UI/ErrorLayout';
+import { boardActions } from '../../../../shared/store/kanban-slice';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { BsListTask } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+
+const PRIORITIES = [
+    'Low', 'Med', 'High'
+]
 
 const AddTask = (props) => {
-    const { tables, options } = props
+    const { tables } = props;
     const [showModal, setShowModal] = useState(false);
     const [task, setTask] = useState('');
-	const [selectedTable, setSelectedtable] = useState('Backlog');
-	const [selectedPriority, setSelectedPriority] = useState('Low');
-	const [selectedMember, setSelectedMember] = useState('Mustafa');
+    const [tableName, setTableName] = useState(tables[0]);
+    const [priorityName, setPriorityName] = useState(PRIORITIES[0]);
 	const [isTouched, setIsTouched] = useState(false);
 	const [formError, setFormError] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState();
     const navigate = useNavigate();
-
+	const params = useParams().bid;
+	const user = useSelector(state => state.user).user;
+	const dispatch = useDispatch();
+	
     const showModalHandler = () => {
         setShowModal(true);
-        navigate('/boards/1/add-task');
+        navigate(`/boards/${params}/add-task`);
     }
 
     const closeModalHandler = () => {
@@ -28,7 +39,7 @@ const AddTask = (props) => {
         setIsTouched(false);
         setTask('');
         setFormError(true);
-        navigate('/boards/1');
+        navigate(`/boards/${params}`);
     }
 
     const changeTaskHandler = (e) => {
@@ -37,19 +48,38 @@ const AddTask = (props) => {
     }
 
     const selectTableHandler = (e) => {
-        setSelectedtable(e.target.value);
+		setTableName(e.target.value);
     }
 
     const selectPriorityHandler = (e) => {
-        setSelectedPriority(e.target.value)
+		setPriorityName(e.target.value);
     }
 
-    const selectMemberHandler = (e) => {
-        setSelectedMember(e.target.value)
-    }
+    // const selectMemberHandler = (e) => {
+		
+    // }
 
-    const addItemHandler = () => {
-
+    const addItemHandler = async() => {
+		setIsLoading(true);
+		let newTask = {taskName: task, taskTable: tableName, taskPriority: priorityName, taskOwner: user.id, img: user.image};
+		try {
+			const response = await fetch(`http://localhost:5000/api/boards/boards/${params}/add-task`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(newTask)
+			})
+			const responseData = await response.json();
+			if(!response.ok) {
+				throw new Error(responseData.message);
+			}
+			dispatch(boardActions.updateCurrentBoardTasks(newTask))
+			navigate(`/boards/${params}`);
+		} catch (error) {
+			setError('Something went wrong while adding new task. Please try again later!');
+		}
+		setIsLoading(false);
     }
 
     useEffect(() => {
@@ -59,7 +89,9 @@ const AddTask = (props) => {
 
     return (
         <>
-            <Link to='/boards/1/add-task'>
+			<ErrorLayout error={error} />
+			{isLoading && <LoadingSpinner asOverlay />}
+            <Link to={`/boards/${params}/add-task`}>
 				<div 
 					onClick={showModalHandler} 
 					className='flex justify-center items-center bg-white mt-5 mx-3 rounded-lg' 
@@ -92,31 +124,40 @@ const AddTask = (props) => {
 						/>
 						<div className='flex flex-col justify-center items-start'>
 							<p className='mb-2 font-semibold'>Select Table</p>
-							<Select 
-								name='Table'
+							<select 
+								onChange={selectTableHandler} 
 								className='border border-slate-300 rounded-lg font-medium text-sky-600 px-5 text-lg'
-								options={tables}
-								onChange={selectTableHandler}
-								value={selectedTable}
-							/>
+							>
+								{
+									tables.map(board => (
+										<option key={board} value={board}>{board}</option>
+									))
+								}
+							</select>
 
 							<p className='mb-2 mt-4 font-semibold'>Select Priority</p>
-							<Select 
-								name='Priority'
+							<select 
+								onChange={selectPriorityHandler} 
 								className='border border-slate-300 rounded-lg font-medium text-sky-600 px-5 text-lg mb-4'
-								options={options}
-								onChange={selectPriorityHandler}
-								value={selectedPriority}
-							/>
+							>
+								{
+									PRIORITIES.map(board => (
+										<option key={board} value={board}>{board}</option>
+									))
+								}
+							</select>
 
-                            <p className='mb-2 font-semibold'>Assign Member</p>
-							<Select 
-								name='Assing'
+                            {/* <p className='mb-2 font-semibold'>Assign Member</p>
+							<select 
+								onChange={selectMemberHandler} 
 								className='border border-slate-300 rounded-lg font-medium text-sky-600 px-5 text-lg mb-4'
-								options={options}
-								onChange={selectMemberHandler}
-								value={selectedMember}
-							/>
+							>
+								{
+									boardDatas.map(board => (
+										<option key={board.id} value={board.title}>{board.title}</option>
+									))
+								}
+							</select> */}
 						</div>
 					</>
 				}
