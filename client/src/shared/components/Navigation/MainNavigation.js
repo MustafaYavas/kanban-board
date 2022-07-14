@@ -1,6 +1,7 @@
 import logo from '../../../assets/logo.png';
 import styles from './MainNavigation.module.css';
 import { userActions } from '../../store/user-slice';
+import { boardActions } from '../../store/kanban-slice';
 
 import { Link, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +11,7 @@ const MainNavigation = () => {
 	const dispatch = useDispatch();
 	const logoutHandler = () => {
 		dispatch(userActions.logoutHandler());
+		dispatch(boardActions.clearCurrentBoard());
 	}
 	
 	return (

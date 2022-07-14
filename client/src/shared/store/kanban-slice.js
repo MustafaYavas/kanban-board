@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialBoardState = {
-    board: {}
+    board: null
 }
 
 const boardSlice = createSlice({
@@ -12,8 +12,16 @@ const boardSlice = createSlice({
             state.board = action.payload;
         },
 
-        updateCurrentBoardTasks(state, action) {
+        addCurrentBoardTasks(state, action) {
             state.board.tasks.push(action.payload);
+        },
+
+        updateCurrentBoardTasks(state, action) {
+            state.board.tasks = action.payload;
+        },
+
+        clearCurrentBoard(state) {
+            state.board = null;
         }
     }
 });

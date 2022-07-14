@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { BsListTask } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 const PRIORITIES = [
     'Low', 'Med', 'High'
@@ -20,17 +21,20 @@ const AddTask = (props) => {
     const [task, setTask] = useState('');
     const [tableName, setTableName] = useState(tables[0]);
     const [priorityName, setPriorityName] = useState(PRIORITIES[0]);
+    const [memberName, setMemberName] = useState();
+    const [members, setMembers] = useState(null);
 	const [isTouched, setIsTouched] = useState(false);
 	const [formError, setFormError] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState();
     const navigate = useNavigate();
 	const params = useParams().bid;
-	const user = useSelector(state => state.user).user;
+	const board = useSelector(state => state.board).board;
 	const dispatch = useDispatch();
 	
     const showModalHandler = () => {
-        setShowModal(true);
+		setShowModal(true);
+		getMembers();
         navigate(`/boards/${params}/add-task`);
     }
 
@@ -55,13 +59,22 @@ const AddTask = (props) => {
 		setPriorityName(e.target.value);
     }
 
-    // const selectMemberHandler = (e) => {
-		
-    // }
-
+    const selectMemberHandler = async(e) => {
+		try {
+			const response = await fetch(`http://localhost:5000/api/users/${e.target.value}`);
+            const responseData = await response.json();
+            if(!response.ok) {
+                throw new Error(responseData.message);
+            }
+			setMemberName(responseData.user);
+		} catch (error) {
+			
+		}
+    }
     const addItemHandler = async() => {
+		if(!memberName) return setError('You need to select a member!');
 		setIsLoading(true);
-		let newTask = {taskName: task, taskTable: tableName, taskPriority: priorityName, taskOwner: user.id, img: user.image};
+		let newTask = {taskName: task, taskTable: tableName, taskPriority: priorityName, taskOwner: memberName[0].id, img: memberName[0].image, id: uuidv4()};
 		try {
 			const response = await fetch(`http://localhost:5000/api/boards/boards/${params}/add-task`, {
 				method: 'POST',
@@ -74,13 +87,27 @@ const AddTask = (props) => {
 			if(!response.ok) {
 				throw new Error(responseData.message);
 			}
-			dispatch(boardActions.updateCurrentBoardTasks(newTask))
+			dispatch(boardActions.addCurrentBoardTasks(newTask))
 			navigate(`/boards/${params}`);
 		} catch (error) {
 			setError('Something went wrong while adding new task. Please try again later!');
 		}
 		setIsLoading(false);
+		setMemberName([])
     }
+
+	const getMembers = async() => {
+		try {
+			const response = await fetch(`http://localhost:5000/api/boards/boards/${board.id}/members`);
+            const responseData = await response.json();
+            if(!response.ok) {
+                throw new Error(responseData.message);
+            }
+			setMembers(responseData.members)
+		} catch (error) {
+			
+		}
+	}
 
     useEffect(() => {
         if(task.length === 0) return setFormError(true);
@@ -94,7 +121,7 @@ const AddTask = (props) => {
             <Link to={`/boards/${params}/add-task`}>
 				<div 
 					onClick={showModalHandler} 
-					className='flex justify-center items-center bg-white mt-5 mx-3 rounded-lg' 
+					className='flex justify-center items-center mt-5 px-5 rounded-lg bg-slate-200' 
 					role='button'
 				>
 					<p className='m-2'>Add New Task</p>
@@ -147,17 +174,24 @@ const AddTask = (props) => {
 								}
 							</select>
 
-                            {/* <p className='mb-2 font-semibold'>Assign Member</p>
-							<select 
-								onChange={selectMemberHandler} 
-								className='border border-slate-300 rounded-lg font-medium text-sky-600 px-5 text-lg mb-4'
-							>
-								{
-									boardDatas.map(board => (
-										<option key={board.id} value={board.title}>{board.title}</option>
-									))
-								}
-							</select> */}
+                            {
+								members && 
+								<>
+									<p className='mb-2 font-semibold'>Assign Member</p>
+									<select 
+										onChange={selectMemberHandler} 
+										className='border border-slate-300 rounded-lg font-medium text-sky-600 px-5 text-lg mb-4'
+										
+									>
+										<option key={1} value='select member'>Select member</option>
+										{
+											members.map(member => (
+												<option key={member.id} value={member.username}>{member.username}</option>
+											))
+										}
+									</select>
+								</>
+							}
 						</div>
 					</>
 				}

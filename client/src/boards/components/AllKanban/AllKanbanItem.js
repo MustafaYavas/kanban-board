@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../../shared/store/user-slice';
 
 const AllkanbanItem = (props) => {
-    const { id, title, usageArea, creatorName, membersNumber, createDate, boardPassword } = props;
+    const { id, title, usageArea, creatorName, membersNumber, membersLength, createDate, boardPassword } = props;
     const [showModal, setShowModal] = useState(false);
     const [password, setPassword] = useState('');
 	const [isTouched, setIsTouched] = useState(false);
@@ -20,9 +20,8 @@ const AllkanbanItem = (props) => {
     const dispatch = useDispatch();
     
     const showModalHandler = () => {
-        setError();
         if(creatorName === user.username || user.memberBoards.includes(id)) return navigate(`/boards/${id}`);
-        setShowModal(true);
+        setShowModal(membersLength >= membersNumber ? false : true);
         navigate('/all-boards/join');
     }
 
@@ -45,6 +44,7 @@ const AllkanbanItem = (props) => {
     }, [password]);
 
     const enterBoardHandler = async() => {
+        setError()
         if(password === boardPassword) {
             try {
 				const response = await fetch('http://localhost:5000/api/boards/all-boards/join', {
@@ -58,8 +58,7 @@ const AllkanbanItem = (props) => {
                 if(!response.ok) {
                     throw new Error(responseData.message);
                 }
-                
-                dispatch(userActions.updateUser(responseData.board.boardId));
+                dispatch(userActions.updateUser(id));
 				navigate(`/boards/${id}`);
 			} catch (error) {
 				setError('Something went wrong while signing you up. Please try again later!');
@@ -99,8 +98,15 @@ const AllkanbanItem = (props) => {
                 modalFunc={enterBoardHandler}
                 buttonText='Enter'
             />
-            <div onClick={showModalHandler} role='button' className='my-5 bg-slate-200 p-10 rounded-lg hover:bg-slate-300'>
-                <p className='text-2xl font-semibold'>{title}</p>
+            <div 
+                onClick={showModalHandler} 
+                role={membersLength >= membersNumber ? '' : 'button'} 
+                className='my-5 bg-slate-200 p-10 rounded-lg hover:bg-slate-300'
+            >
+                <div className='flex justify-between items-center'>
+                    <p className='text-2xl font-semibold'>{title}</p>
+                    <p className='text-md font-semibold text-red-700'>{membersLength >= membersNumber ? 'Full' : ''}</p>
+                </div>
                 <p className='font-medium'>{usageArea}</p>
                 <div className='text-gray-600 flex flex-row font-medium'>
                     <p className='mr-5'>{creatorName}</p>

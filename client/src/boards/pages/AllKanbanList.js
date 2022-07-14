@@ -45,6 +45,7 @@ const AllKanbanList = () => {
                             usageArea={board.usageArea}
                             creatorName={board.creatorName}
                             membersNumber={board.membersNumber}
+                            membersLength={board.members.length}
                             createDate={board.createDate}
                             boardPassword={board.boardPassword}
                         />
