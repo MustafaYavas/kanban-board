@@ -26,6 +26,7 @@ const App = () => {
                 <Route path='/boards/:bid/members' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
                 <Route path='/boards/:bid/add-task' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
                 <Route path='/boards/:bid/:tid' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
+                <Route path='/boards/:bid/delete' element={isLoggedIn ? <MyKanbanBoard /> : <Navigate replace to='/' />}/>
             </Routes>
         </Layout>
     )

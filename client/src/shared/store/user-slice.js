@@ -27,6 +27,11 @@ const userSlice = createSlice({
         updateUser(state, action) {
             state.isLoggedIn = true;
             state.user.memberBoards.push(action.payload);
+        },
+
+        updateUserBoards(state, action) {
+            state.isLoggedIn = true;
+            state.user.memberBoards = state.user.memberBoards.filter(b => b !== action.payload);
         }
     }
 });

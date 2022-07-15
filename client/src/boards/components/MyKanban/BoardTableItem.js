@@ -1,17 +1,20 @@
 import Modal from '../../../shared//components/UI/Modal';
 import { boardActions } from '../../../shared//store/kanban-slice'
+import ErrorLayout from '../../../shared//components/UI/ErrorLayout';
 
 import { AiOutlineClose } from 'react-icons/ai';
 import { FaGreaterThan, FaLessThan } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import Button from '../../../shared/components/UI/Button';
 
 const BoardTableItem = (props) => {
-    const { task } = props;
+    const { task, tables } = props;
 	const board = useSelector(state => state.board).board;
 	const user = useSelector(state => state.user).user;
 	const [showModal, setShowModal] = useState(false);
+	const [error, setError] = useState();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const params = useParams();
@@ -26,6 +29,7 @@ const BoardTableItem = (props) => {
 	}
 
 	const deleteTaskHandler = async() => {
+		setError();
 		const newTasks = board.tasks.filter(t => t.id !== task.id);
 		try {
 			const response = await fetch(`http://localhost:5000/api/boards/boards/${params.bid}`, {
@@ -41,13 +45,57 @@ const BoardTableItem = (props) => {
             }
 			dispatch(boardActions.updateCurrentBoardTasks(newTasks))
 		} catch (error) {
-			
+			setError('Could not delete task. Please try again later!');
+		}
+	}
+
+	const moveRightHandler = async() => {
+		setError();
+		const index = tables.findIndex(t => t === task.taskTable);
+		dispatch(boardActions.moveBoardItemHandler({id: task.id, table: tables[index+1]}))
+		
+		try {
+			const response = await fetch(`http://localhost:5000/api/boards/boards/${params.bid}`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({id: task.id, tasks: board.tasks, table: tables[index+1]})
+			});
+			const responseData = await response.json();
+			if(!response.ok) {
+				throw new Error(responseData.message);
+			}
+		} catch (error) {
+			setError('Could not update task. Please try again later!');
+		}
+	}
+
+	const moveLeftHandler = async() => {
+		setError();
+		const index = tables.findIndex(t => t === task.taskTable);
+		dispatch(boardActions.moveBoardItemHandler({id: task.id, table: tables[index-1]}));
+		
+		try {
+			const response = await fetch(`http://localhost:5000/api/boards/boards/${params.bid}`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({id: task.id, tasks: board.tasks, table: tables[index-1]})
+			});
+			const responseData = await response.json();
+			if(!response.ok) {
+				throw new Error(responseData.message);
+			}
+		} catch (error) {
+			setError('Could not update task. Please try again later!');
 		}
 	}
 
 	return (
 		<>
-
+			<ErrorLayout error={error} />
 			<div className='rounded-lg bg-white mx-3 mt-5 py-2 shadow-lg'>
 				<div className='flex justify-between items-center'>
 					{task.taskPriority === 'Low' && (
@@ -71,24 +119,22 @@ const BoardTableItem = (props) => {
 					<div className='flex justify-end'>
 						{
 							task.taskTable !== 'Backlog' &&
-							<Link
-								to={`/boards/${board.id}`}
-								onClick={showModalHandler} 
+							<Button
+								onClick={moveLeftHandler} 
 								className='border rounded-full h-8 w-8 flex justify-center items-center mx-2 hover:bg-fuchsia-500 hover:text-white'
 							>
 								<FaLessThan />
-							</Link>
+							</Button>
 						}
 
 						{
 							task.taskTable !== 'Complete' &&
-								<Link
-								to={`/boards/${board.id}`}
-								onClick={showModalHandler} 
+								<Button
+								onClick={moveRightHandler} 
 								className='border rounded-full h-8 w-8 flex justify-center items-center mx-2 hover:bg-pink-500 hover:text-white'
 							>
 								<FaGreaterThan />
-							</Link>
+							</Button>
 						}
 					</div>
 				</div>

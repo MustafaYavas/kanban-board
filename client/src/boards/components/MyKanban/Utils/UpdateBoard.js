@@ -84,7 +84,7 @@ const UpdateBoard = () => {
                 className='border border-blue-600 p-2 rounded-md font-medium hover:bg-blue-600 hover:text-white'
                 onClick={showModalHandler}
             >
-                Update Board
+                Update
             </Link>
 
             <Modal 

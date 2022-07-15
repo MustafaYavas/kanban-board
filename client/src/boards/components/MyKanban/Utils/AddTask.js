@@ -16,7 +16,7 @@ const PRIORITIES = [
 ]
 
 const AddTask = (props) => {
-    const { tables } = props;
+    const { tables, user } = props;
     const [showModal, setShowModal] = useState(false);
     const [task, setTask] = useState('');
     const [tableName, setTableName] = useState(tables[0]);
@@ -103,7 +103,8 @@ const AddTask = (props) => {
             if(!response.ok) {
                 throw new Error(responseData.message);
             }
-			setMembers(responseData.members)
+			if(responseData.members.length !== 0) setMembers(responseData.members)
+			else setMembers([user])
 		} catch (error) {
 			
 		}
@@ -185,9 +186,13 @@ const AddTask = (props) => {
 									>
 										<option key={1} value='select member'>Select member</option>
 										{
-											members.map(member => (
+											members && members.map(member => (
 												<option key={member.id} value={member.username}>{member.username}</option>
 											))
+										}
+
+										{
+											// !members && <option key={userId} value={username}>{username}</option>
 										}
 									</select>
 								</>

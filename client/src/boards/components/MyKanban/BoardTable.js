@@ -14,7 +14,7 @@ const BoardTable = (props) => {
 						<h1 className='font-semibold text-lg mx-3'>{t}</h1>
 							{
 								board.tasks.map((task, i) => (
-									t===task.taskTable && <BoardTableItem key={i} task={task} />
+									t===task.taskTable && <BoardTableItem key={i} task={task} tables={tables} />
 								))
 							}
 						

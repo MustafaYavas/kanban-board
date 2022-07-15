@@ -1,9 +1,23 @@
 import Input from '../../../shared/components/UI/Input/Input';
+import { boardActions } from '../../../shared/store/kanban-slice';
 
 import { FcSearch } from 'react-icons/fc';
-
+import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 const AllKanbanSearch = () => {
+    const [searchText, setSearchText] = useState('');
+    const dispatch = useDispatch();
+
+    const changeSearchTextHandler = (e) => {
+        setSearchText(e.target.value);
+        dispatch(boardActions.searchBoards(e.target.value));
+    }
+
+    useEffect(() => {
+        dispatch(boardActions.searchBoards(''));
+    }, [dispatch])
+
     return (
         <div className='my-10 pl-5 rounded-lg bg-slate-200 font-semibold text-lg'>
             <Input 
@@ -13,6 +27,8 @@ const AllKanbanSearch = () => {
                 style={{width: '80%'}}
                 type='text'
                 placeholder='Search Kanban'
+                onChange={changeSearchTextHandler}
+                value={searchText}
             />
         </div>
     )
