@@ -10,7 +10,7 @@ const UserProfile = (props) => {
             
                 <div className='flex flex-col justify-center items-center'>
                     <UserInfos 
-                        imgUrl={datas.image}
+                        imgUrl={`http://localhost:5000/${datas.image}`}
                         name={datas.name}
                         email={datas.email}
                     />

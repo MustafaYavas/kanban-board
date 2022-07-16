@@ -18,7 +18,7 @@ const BoardTableItem = (props) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const params = useParams();
-
+	
 	const showModalHandler = () => {
 		setShowModal(true);
 	} 
@@ -139,12 +139,12 @@ const BoardTableItem = (props) => {
 					</div>
 				</div>
 
-				<p className='ml-2 mt-2'>{task.taskName}</p>
+				<p className='ml-2 mt-2 font-medium text-lg'>{task.taskName}</p>
 				<div className='flex justify-between items-center mt-2'>
 					<img
 						className='mx-2 self-end h-8 w-8'
 						style={{ borderRadius: '50%' }}
-						src={task.img}
+						src={`http://localhost:5000/${task.img}`}
 						alt='person'
 					/>
 

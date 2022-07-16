@@ -10,6 +10,7 @@ import { FaUserNinja } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import ImageUpload from '../../shared/components/UI/ImageUpload/ImageUpload';
 
 const AuthForm = () => {
 	const [isLogin, setIsLogin] = useState(true);
@@ -17,6 +18,7 @@ const AuthForm = () => {
 	const [name, setName] = useState('');
 	const [password, setpassword] = useState('');
 	const [username, setUsername] = useState('');
+	const [image, setImage] = useState(null);
 	const [isTouched, setIsTouched] = useState(false);
 	const [formError, setFormError] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
@@ -59,12 +61,15 @@ const AuthForm = () => {
             }
         } else {
 			try {
+				const formData = new FormData();
+				formData.append('email', email);
+				formData.append('name', name);
+				formData.append('username', username);
+				formData.append('password', password);
+				formData.append('image', image);
 				const response = await fetch('http://localhost:5000/api/users/signup', {
 					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({email, name, username, password})
+					body: formData
 				})
 				const responseData = await response.json();
                 if(!response.ok) {
@@ -83,8 +88,8 @@ const AuthForm = () => {
 		if(isLogin) 
 			(!email.includes('@') || password.length < 5) ? setFormError(true) : setFormError(false);
 		else 
-			(!email.includes('@') || name.length === 0 || password.length < 5 || username.length < 5) ? setFormError(true) : setFormError(false);
-	}, [isLogin, email, name, password, username, formError]);
+			(!email.includes('@') || name.length === 0 || password.length < 5 || username.length < 5 || !image ) ? setFormError(true) : setFormError(false);
+	}, [isLogin, email, name, password, username, image, formError]);
 
 	const changeEmailHandler = (e) => {
 		setEmail(e.target.value);
@@ -106,6 +111,10 @@ const AuthForm = () => {
 		setIsTouched(true);
 	}
 
+	const inputImageHandler = (id, pickedFile, fileIsValid) => {
+		setImage(pickedFile)
+	}
+
 	return (
 		<>	
 			<ErrorLayout error={error} />
@@ -115,61 +124,68 @@ const AuthForm = () => {
 				</h1>
 				{isLoading && <LoadingSpinner asOverlay/>}
 				<form onSubmit={authHandler}>
-					<Input
-						icon={<MdAlternateEmail />}
-						iconClass='top-2.5 left-2.5'
-						className='mb-1 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
-						onChange={changeEmailHandler}
-						value={email}
-						style={{ width: '30rem' }}
-						type='email'
-						placeholder='email'
-						error={isTouched && !email.includes('@')}
-						errorText='Must contain @ character!'
-					/>
+					<div className='flex justify-between'>
+						<div className='mr-5'>
+							<Input
+								icon={<MdAlternateEmail />}
+								iconClass='top-2.5 left-2.5'
+								className='mb-1 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
+								onChange={changeEmailHandler}
+								value={email}
+								style={{ width: '25rem' }}
+								type='email'
+								placeholder='email'
+								error={isTouched && !email.includes('@')}
+								errorText='Must contain @ character!'
+							/>
 
-					{!isLogin && (
-						<Input
-							icon={<RiUserLine />}
-							iconClass='top-2.5 left-2.5'
-							className='mb-1 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
-							onChange={changeNameHandler}
-							value={name}
-							style={{ width: '30rem' }}
-							type='text'
-							placeholder='name'
-							error={isTouched && name.length === 0}
-							errorText='Can not be empty!'
-						/>
-					)}
+							{!isLogin && (
+								<Input
+									icon={<RiUserLine />}
+									iconClass='top-2.5 left-2.5'
+									className='mb-1 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
+									onChange={changeNameHandler}
+									value={name}
+									style={{ width: '25rem' }}
+									type='text'
+									placeholder='name'
+									error={isTouched && name.length === 0}
+									errorText='Can not be empty!'
+								/>
+							)}
 
-					{!isLogin && (
-						<Input
-							icon={<FaUserNinja />}
-							iconClass='top-2.5 left-2.5'
-							className='mb-1 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
-							onChange={changeUsernameHandler}
-							value={username}
-							style={{ width: '30rem' }}
-							type='text'
-							placeholder='username'
-							error={isTouched && username.length < 5}
-							errorText='Can not be less than 5 characters!'
-						/>
-					)}
+							{!isLogin && (
+								<Input
+									icon={<FaUserNinja />}
+									iconClass='top-2.5 left-2.5'
+									className='mb-1 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
+									onChange={changeUsernameHandler}
+									value={username}
+									style={{ width: '25rem' }}
+									type='text'
+									placeholder='username'
+									error={isTouched && username.length < 5}
+									errorText='Can not be less than 5 characters!'
+								/>
+							)}
 
-					<Input
-						icon={<RiLockPasswordLine />}
-						iconClass='top-2.5 left-2.5'
-						className='mb-1 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
-						onChange={changePasswordHandler}
-						value={password}
-						style={{ width: '30rem' }}
-						type='password'
-						placeholder='password'
-						error={isTouched && password.length < 5}
-						errorText='Can not be less than 5 characters!'
-					/>
+							<Input
+								icon={<RiLockPasswordLine />}
+								iconClass='top-2.5 left-2.5'
+								className='mb-1 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
+								onChange={changePasswordHandler}
+								value={password}
+								style={{ width: '25rem' }}
+								type='password'
+								placeholder='password'
+								error={isTouched && password.length < 5}
+								errorText='Can not be less than 5 characters!'
+							/>
+						</div>
+
+						{ !isLogin && <ImageUpload id='image' onInput={inputImageHandler} errorText='Please provide an image' /> }
+					</div>
+
 
 					<div className='flex flex-col justify-center items-center'>
 						<Button
