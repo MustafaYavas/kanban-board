@@ -16,11 +16,11 @@ const AllkanbanItem = (props) => {
 	const [formError, setFormError] = useState(true);
 	const [error, setError] = useState();
     const navigate = useNavigate();
-    const user = useSelector(state => state.user).user;
+    const user = useSelector(state => state.user);
     const dispatch = useDispatch();
     
     const showModalHandler = () => {
-        if(creatorName === user.username || user.memberBoards.includes(id)) return navigate(`/boards/${id}`);
+        if(creatorName === user.user.username || user.user.memberBoards.includes(id)) return navigate(`/boards/${id}`);
         setShowModal(membersLength >= membersNumber ? false : true);
         navigate('/all-boards/join');
     }
@@ -50,9 +50,10 @@ const AllkanbanItem = (props) => {
 				const response = await fetch('http://localhost:5000/api/boards/all-boards/join', {
 					method: 'POST',
 					headers: {
-						'Content-Type': 'application/json'
+						'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + user.token
 					},
-					body: JSON.stringify({boardId: id, boardPassword: password, userId: user.id})
+					body: JSON.stringify({boardId: id, boardPassword: password, userId: user.user.id})
 				})
 				const responseData = await response.json();
                 if(!response.ok) {

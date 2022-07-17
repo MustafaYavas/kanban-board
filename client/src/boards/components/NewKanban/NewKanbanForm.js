@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const NewKanbanForm = () => {
 	const navigate = useNavigate();
-	const user = useSelector(state => state.user).user;
+	const user = useSelector(state => state.user);
 	const [title, setTitle] = useState('');
 	const [membersNumber, setMembersNumber] = useState('');
 	const [usageArea, setUsageArea] = useState('');
@@ -33,10 +33,11 @@ const NewKanbanForm = () => {
 			const response = await fetch('http://localhost:5000/api/boards', {
 				method:'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + user.token
 				},
 				body: JSON.stringify({
-					title, usageArea, membersNumber, owner: user.id, creatorName: user.username, boardPassword
+					title, usageArea, membersNumber, owner: user.user.id, creatorName: user.user.username, boardPassword
 				})
 			})
 

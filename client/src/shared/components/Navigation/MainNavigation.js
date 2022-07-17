@@ -12,6 +12,7 @@ const MainNavigation = () => {
 	const logoutHandler = () => {
 		dispatch(userActions.logoutHandler());
 		dispatch(boardActions.clearCurrentBoard());
+		localStorage.removeItem('userData');
 	}
 	
 	return (

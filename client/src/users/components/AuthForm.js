@@ -49,12 +49,19 @@ const AuthForm = () => {
                     },
                     body: JSON.stringify({email, password})
                 })
-
                 const responseData = await response.json();
                 if(!response.ok) {
                     throw new Error(responseData.message);
                 }
-                dispatch(userActions.signupHandler(responseData.user));
+				const tokenExpDate = new Date(new Date().getTime() + 1000 * 60 * 60);
+                dispatch(userActions.signupHandler({ user: responseData.user, token: responseData.token, tokenExpDate:tokenExpDate }));
+				localStorage.setItem('userData', JSON.stringify(
+					{
+						user: responseData.user, 
+						token: responseData.token,
+						expiration: tokenExpDate.toISOString()
+					}
+				));
                 navigate('/all-boards', {replace: true});
             } catch (error) {
                 setError('Something went wrong while logging you in. Please try again later!');
@@ -75,7 +82,15 @@ const AuthForm = () => {
                 if(!response.ok) {
                     throw new Error(responseData.message);
                 }
-				dispatch(userActions.signupHandler(responseData.user));
+				const tokenExpDate = new Date(new Date().getTime() + 1000 * 60 * 60);
+				dispatch(userActions.signupHandler({ user: responseData.user, token: responseData.token, tokenExpDate:tokenExpDate }));
+				localStorage.setItem('userData', JSON.stringify(
+					{ 
+						user: responseData.user, 
+						token: responseData.token,
+						expiration: tokenExpDate
+					}
+				));
 				navigate('/all-boards', {replace: true});
 			} catch (error) {
 				setError('Something went wrong while signing you up. Please try again later!');

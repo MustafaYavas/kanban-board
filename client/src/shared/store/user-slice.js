@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialUserState = {
     isLoggedIn: false,
+    token: null,
+    tokenExpDate: null,
     user:  null
 }
 
@@ -11,17 +13,23 @@ const userSlice = createSlice({
     reducers: {
         loginHandler(state, action) {
             state.isLoggedIn = true;
-            state.user = action.payload;
+            state.token = action.payload.token;
+            state.tokenExpDate = action.payload.tokenExpDate;
+            state.user = action.payload.user;
         },
 
         logoutHandler(state) {
             state.isLoggedIn = false;
+            state.token = null;
+            state.tokenExpDate = null;
             state.user = null;
         },
 
         signupHandler(state, action) {
             state.isLoggedIn = true;
-            state.user = action.payload;
+            state.token = action.payload.token;
+            state.tokenExpDate = action.payload.tokenExpDate;
+            state.user = action.payload.user;
         },
 
         updateUser(state, action) {

@@ -18,7 +18,7 @@ const TABLES = [
 
 const MyKanbanBoard = () => {
     const board = useSelector(state => state.board).board;
-    const user = useSelector(state => state.user).user;
+    const user = useSelector(state => state.user);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
     const [showModal, setShowModal] = useState(false);
@@ -38,7 +38,12 @@ const MyKanbanBoard = () => {
     const deleteBoardHandler = async() => {
         try {
 			const response = await fetch(`http://localhost:5000/api/boards/${board.id}`, {
-				method: 'DELETE'
+				method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + user.token
+                },
+                body: null
 			});
 			const responseData = await response.json();
             if(!response.ok) {
@@ -77,12 +82,12 @@ const MyKanbanBoard = () => {
                 board &&
                 <div className='mt-5'>
                     <div className='flex justify-between items-center'>
-                        { board.owner === user.id && <SelectBoard /> }
+                        { board.owner === user.user.id && <SelectBoard /> }
                         <h1 className='text-center font-semibold text-lg text-blue-600'>{board.title}</h1>
                         <div>
-                            { board.owner === user.id && <UpdateBoard /> }
+                            { board.owner === user.user.id && <UpdateBoard /> }
                             {
-                                board.owner === user.id && 
+                                board.owner === user.user.id && 
                                 <Link 
                                     to={`/boards/${board.id}/delete`}
                                     onClick={showModalHandler} 
@@ -94,7 +99,6 @@ const MyKanbanBoard = () => {
                         </div>
                     </div>
 
-                    
                     <Modal 
                         show={showModal} 
                         closeHandler={closeModalHandler} 
@@ -105,7 +109,7 @@ const MyKanbanBoard = () => {
                     />
 
                     <div className='flex justify-center'>
-                        {board.owner === user.id && <AddTask user={user} tables={TABLES}/>}
+                        {board.owner === user.user.id && <AddTask user={user.user} tables={TABLES}/>}
                     </div>
                     <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mt-5 gap-5'>
                         <BoardTable tables={TABLES}/>

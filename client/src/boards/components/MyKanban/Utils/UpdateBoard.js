@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const UpdateBoard = () => {
     const board = useSelector(state => state.board).board;
+    const user = useSelector(state => state.user);
     const [showModal, setShowModal] = useState(false);
     const [title, setTitle] = useState('');
     const [usageArea, setUsageArea] = useState('');
@@ -54,7 +55,8 @@ const UpdateBoard = () => {
             const response = await fetch(`http://localhost:5000/api/boards/${params}`, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + user.token
                 },
                 body: JSON.stringify({title, usageArea})
             })
