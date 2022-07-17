@@ -7,8 +7,10 @@ import { useDispatch } from 'react-redux';
 import { boardActions } from '../../../../shared/store/kanban-slice';
 import { useNavigate } from 'react-router-dom';
 
-const SelectBoard = () => {
+const SelectBoard = (props) => {
+    const { id } = props;
     const user = useSelector(state => state.user).user;
+    const board = useSelector(state => state.board);
     const [boardDatas, setBoardDatas] = useState([]);
     const [boardTitles, setBoardTitles] = useState([]);
     const [boardIds, setBoardIds] = useState([]);
@@ -41,7 +43,7 @@ const SelectBoard = () => {
             setBoardIds(ids);
         }
         fetchDatas();
-    }, [user.memberBoards]);
+    }, [user.memberBoards, board]);
 
     // console.log(boardDatas);
 
@@ -74,7 +76,7 @@ const SelectBoard = () => {
             >
                 {
                     boardDatas.map(board => (
-                        <option key={board.id} value={board.title}>{board.title}</option>
+                        <option selected={id === board.id} key={board.id} value={board.title}>{board.title}</option>
                     ))
                 }
             </select>

@@ -30,6 +30,7 @@ const AddTask = (props) => {
     const navigate = useNavigate();
 	const params = useParams().bid;
 	const board = useSelector(state => state.board).board;
+	const token = useSelector(state => state.user).token;
 	const dispatch = useDispatch();
 	
     const showModalHandler = () => {
@@ -79,7 +80,8 @@ const AddTask = (props) => {
 			const response = await fetch(`http://localhost:5000/api/boards/boards/${params}/add-task`, {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + token
 				},
 				body: JSON.stringify(newTask)
 			})
@@ -122,7 +124,7 @@ const AddTask = (props) => {
             <Link to={`/boards/${params}/add-task`}>
 				<div 
 					onClick={showModalHandler} 
-					className='flex justify-center items-center mt-5 px-5 rounded-lg bg-slate-200' 
+					className='flex justify-center items-center px-5 rounded-lg bg-slate-200' 
 					role='button'
 				>
 					<p className='m-2'>Add New Task</p>
@@ -191,9 +193,6 @@ const AddTask = (props) => {
 											))
 										}
 
-										{
-											// !members && <option key={userId} value={username}>{username}</option>
-										}
 									</select>
 								</>
 							}

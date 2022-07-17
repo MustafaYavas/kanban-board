@@ -73,7 +73,7 @@ const MyKanbanBoard = () => {
         }
         fetchData();
     }, [params.bid, dispatch]);
-
+    
     return (
         <>
             <ErrorLayout error={error} />
@@ -81,22 +81,32 @@ const MyKanbanBoard = () => {
             {
                 board &&
                 <div className='mt-5'>
-                    <div className='flex justify-between items-center'>
-                        { board.owner === user.user.id && <SelectBoard /> }
-                        <h1 className='text-center font-semibold text-lg text-blue-600'>{board.title}</h1>
-                        <div>
-                            { board.owner === user.user.id && <UpdateBoard /> }
-                            {
-                                board.owner === user.user.id && 
-                                <Link 
-                                    to={`/boards/${board.id}/delete`}
-                                    onClick={showModalHandler} 
-                                    className='border border-blue-600 p-2 rounded-md font-medium hover:bg-blue-600 hover:text-white ml-5'
-                                >
-                                    Delete
-                                </Link>
-                            }
+                    <div>
+                        <h1 className='text-center font-semibold text-xl text-blue-600'>{board.title}</h1>
+                        <h2 className='text-center font-medium text-sm text-blue-400'>{board.usageArea}</h2>
+                    </div>
+
+                    <div className='flex justify-between items-center mt-5'>
+                        <SelectBoard id={board.id}/>
+                        <div className='flex justify-center'>
+                            {board.owner === user.user.id && <AddTask user={user.user} tables={TABLES}/>}
                         </div>
+                        { 
+                            board.owner === user.user.id && 
+                            <div>
+                                { board.owner === user.user.id && <UpdateBoard /> }
+                                {
+                                    board.owner === user.user.id && 
+                                    <Link 
+                                        to={`/boards/${board.id}/delete`}
+                                        onClick={showModalHandler} 
+                                        className='border border-blue-600 p-2 rounded-md font-medium hover:bg-blue-600 hover:text-white ml-5'
+                                    >
+                                        Delete
+                                    </Link>
+                                }
+                            </div> 
+                        }
                     </div>
 
                     <Modal 
@@ -108,9 +118,6 @@ const MyKanbanBoard = () => {
                         buttonText='Delete'
                     />
 
-                    <div className='flex justify-center'>
-                        {board.owner === user.user.id && <AddTask user={user.user} tables={TABLES}/>}
-                    </div>
                     <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mt-5 gap-5'>
                         <BoardTable tables={TABLES}/>
                     </div>

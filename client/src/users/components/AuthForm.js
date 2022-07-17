@@ -53,7 +53,7 @@ const AuthForm = () => {
                 if(!response.ok) {
                     throw new Error(responseData.message);
                 }
-				const tokenExpDate = new Date(new Date().getTime() + 1000 * 60 * 60);
+				const tokenExpDate = new Date(new Date().getTime() + 1000 * 60 * 60 * 24);
                 dispatch(userActions.signupHandler({ user: responseData.user, token: responseData.token, tokenExpDate:tokenExpDate }));
 				localStorage.setItem('userData', JSON.stringify(
 					{
@@ -82,7 +82,7 @@ const AuthForm = () => {
                 if(!response.ok) {
                     throw new Error(responseData.message);
                 }
-				const tokenExpDate = new Date(new Date().getTime() + 1000 * 60 * 60);
+				const tokenExpDate = new Date(new Date().getTime() + 1000 * 60 * 60 *24);
 				dispatch(userActions.signupHandler({ user: responseData.user, token: responseData.token, tokenExpDate:tokenExpDate }));
 				localStorage.setItem('userData', JSON.stringify(
 					{ 

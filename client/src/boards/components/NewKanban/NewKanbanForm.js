@@ -45,7 +45,7 @@ const NewKanbanForm = () => {
             if(!response.ok) {
                 throw new Error(responseData.message);
             }
-			dispatch(userActions.updateUser(responseData.board.id));
+			dispatch(userActions.addBoardToUser(responseData.board.id));
 			navigate(`/all-boards`, {replace: true})
 		} catch (error) {
 			setError('Something went wrong while creating new board. Please try againg later!');

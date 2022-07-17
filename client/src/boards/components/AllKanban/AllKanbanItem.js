@@ -18,7 +18,7 @@ const AllkanbanItem = (props) => {
     const navigate = useNavigate();
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
-    
+
     const showModalHandler = () => {
         if(creatorName === user.user.username || user.user.memberBoards.includes(id)) return navigate(`/boards/${id}`);
         setShowModal(membersLength >= membersNumber ? false : true);
@@ -59,7 +59,7 @@ const AllkanbanItem = (props) => {
                 if(!response.ok) {
                     throw new Error(responseData.message);
                 }
-                dispatch(userActions.updateUser(id));
+                dispatch(userActions.addBoardToUser(id));
 				navigate(`/boards/${id}`);
 			} catch (error) {
 				setError('Something went wrong while signing you up. Please try again later!');

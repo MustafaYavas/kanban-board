@@ -7,6 +7,7 @@ import { boardActions } from '../../../../shared/store/kanban-slice';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { MdOutlineDriveFileRenameOutline } from 'react-icons/md';
+import { TiGroup } from 'react-icons/ti';
 import { BsQuestion } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -16,6 +17,7 @@ const UpdateBoard = () => {
     const [showModal, setShowModal] = useState(false);
     const [title, setTitle] = useState('');
     const [usageArea, setUsageArea] = useState('');
+    const [membersNumber, setMembersNumber] = useState('');
 	const [isTouched, setIsTouched] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
@@ -26,6 +28,7 @@ const UpdateBoard = () => {
     const showModalHandler = () => {
         setError();
         setTitle(board.title);
+        setMembersNumber(board.membersNumber);
         setUsageArea(board.usageArea);
         setShowModal(true);
         navigate(`/boards/${params}/update`);
@@ -34,6 +37,7 @@ const UpdateBoard = () => {
     const closeModalHandler = () => {
         setShowModal(false);
         setTitle(board.title);
+        setMembersNumber(board.membersNumber);
         setUsageArea(board.usageArea);
         setIsTouched(false);
         navigate(`/boards/${params}`);
@@ -49,6 +53,11 @@ const UpdateBoard = () => {
         setIsTouched(true);
     }
 
+    const changeMembersHandler = (e) => {
+        setMembersNumber(e.target.value);
+        setIsTouched(true);
+    }
+
     const updateHandler = async() => {
         setIsLoading(true);
         try {
@@ -58,7 +67,7 @@ const UpdateBoard = () => {
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + user.token
                 },
-                body: JSON.stringify({title, usageArea})
+                body: JSON.stringify({title, membersNumber, usageArea})
             })
             const responseData = await response.json();
             if(!response.ok) {
@@ -71,11 +80,6 @@ const UpdateBoard = () => {
         }
         setIsLoading(false);
     }
-
-    // useEffect(() => {
-    //     if(title.length === 0 || usageArea.length < 5) return setFormError(true);
-    //     setFormError(false)
-    // }, [title.length, usageArea.length])
 
     return (
         <>
@@ -107,6 +111,22 @@ const UpdateBoard = () => {
                             type='text'
                             placeholder='Title'
                             error={isTouched && title.length === 0}
+                            errorText='Can not be empty!'
+                        />
+
+                        <Input
+                            label='Kanban Members Number'
+                            icon={<TiGroup />}
+                            iconClass='top-2.5 left-2.5'
+                            className='mb-1 border border-slate-700 rounded-3xl p-1 pr-4 pl-12 focus:border-blue-600'
+                            onChange={changeMembersHandler}
+                            value={membersNumber}
+                            style={{ width: '21rem' }}
+                            type='number'
+                            min='0'
+                            max='20'
+                            placeholder='Number of Members'
+                            error={isTouched && membersNumber.length === 0}
                             errorText='Can not be empty!'
                         />
 

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const MainNavigation = () => {
 	const user = useSelector(state => state.user);
 	const dispatch = useDispatch();
+	
 	const logoutHandler = () => {
 		dispatch(userActions.logoutHandler());
 		dispatch(boardActions.clearCurrentBoard());
@@ -34,6 +35,13 @@ const MainNavigation = () => {
 						</NavLink>
 
 						{
+							user.user.ownBoards.length > 0 ?
+							<NavLink
+								to={`/boards/${user.user.ownBoards[0]}`}
+								className={ (navData) => navData.isActive ? 'border-b-2 border-blue-600' : '' }
+							>
+								My kanban
+							</NavLink> :
 							user.user.memberBoards.length > 0 &&
 							<NavLink
 								to={`/boards/${user.user.memberBoards[0]}`}

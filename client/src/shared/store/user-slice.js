@@ -32,14 +32,20 @@ const userSlice = createSlice({
             state.user = action.payload.user;
         },
 
-        updateUser(state, action) {
+        setUserBoards(state, action) {
+            state.user.memberBoards = action.payload;
+        },
+
+        addBoardToUser(state, action) {
             state.isLoggedIn = true;
             state.user.memberBoards.push(action.payload);
+            state.user.ownBoards.push(action.payload);
         },
 
         updateUserBoards(state, action) {
             state.isLoggedIn = true;
             state.user.memberBoards = state.user.memberBoards.filter(b => b !== action.payload);
+            state.user.ownBoards = state.user.ownBoards.filter(b => b !== action.payload);
         }
     }
 });

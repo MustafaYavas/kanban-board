@@ -12,7 +12,7 @@ import Button from '../../../shared/components/UI/Button';
 const BoardTableItem = (props) => {
     const { task, tables } = props;
 	const board = useSelector(state => state.board).board;
-	const user = useSelector(state => state.user).user;
+	const user = useSelector(state => state.user);
 	const [showModal, setShowModal] = useState(false);
 	const [error, setError] = useState();
 	const navigate = useNavigate();
@@ -35,7 +35,8 @@ const BoardTableItem = (props) => {
 			const response = await fetch(`http://localhost:5000/api/boards/boards/${params.bid}`, {
 				method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + user.token
                 },
                 body: JSON.stringify(newTasks)
 			});
@@ -52,15 +53,16 @@ const BoardTableItem = (props) => {
 	const moveRightHandler = async() => {
 		setError();
 		const index = tables.findIndex(t => t === task.taskTable);
-		dispatch(boardActions.moveBoardItemHandler({id: task.id, table: tables[index+1]}))
+		dispatch(boardActions.moveBoardItemHandler({id: task.id, table: tables[index+1]}));
 		
 		try {
 			const response = await fetch(`http://localhost:5000/api/boards/boards/${params.bid}`, {
 				method: 'PATCH',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + user.token
 				},
-				body: JSON.stringify({id: task.id, tasks: board.tasks, table: tables[index+1]})
+				body: JSON.stringify({id: task.id, table: tables[index+1]})
 			});
 			const responseData = await response.json();
 			if(!response.ok) {
@@ -70,7 +72,7 @@ const BoardTableItem = (props) => {
 			setError('Could not update task. Please try again later!');
 		}
 	}
-
+	
 	const moveLeftHandler = async() => {
 		setError();
 		const index = tables.findIndex(t => t === task.taskTable);
@@ -80,9 +82,10 @@ const BoardTableItem = (props) => {
 			const response = await fetch(`http://localhost:5000/api/boards/boards/${params.bid}`, {
 				method: 'PATCH',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + user.token
 				},
-				body: JSON.stringify({id: task.id, tasks: board.tasks, table: tables[index-1]})
+				body: JSON.stringify({id: task.id, table: tables[index-1]})
 			});
 			const responseData = await response.json();
 			if(!response.ok) {
@@ -149,7 +152,7 @@ const BoardTableItem = (props) => {
 					/>
 
 					{
-						board.owner === user.id && 
+						board.owner === user.user.id && 
 						<Link 
 							to={`/boards/${board.id}/${task.id}`}
 							onClick={showModalHandler} 

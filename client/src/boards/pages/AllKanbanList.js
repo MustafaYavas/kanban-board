@@ -3,15 +3,16 @@ import AllkanbanItem from '../components/AllKanban/AllKanbanItem';
 import AllKanbanSearch from '../components/AllKanban/AllKanbanSearch';
 import LoadingSpinner from '../../shared/components/UI/Spinner/LoadingSpinner';
 import ErrorLayout from '../../shared/components/UI/ErrorLayout';
+import { boardActions } from '../../shared/store/kanban-slice';
 
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { boardActions } from '../../shared/store/kanban-slice';
 
 const AllKanbanList = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
     const board = useSelector(state => state.board);
+    const user = useSelector(state => state.user).user;
     const dispatch = useDispatch();
     
     useEffect(() => {
@@ -31,12 +32,45 @@ const AllKanbanList = () => {
             setIsLoading(false);
         }
         fetchDatas();
-    }, [dispatch])
+    }, [dispatch]);
+
+    useEffect(() => {
+        let userBoardDatas = [];
+        const fetchBoards = async() => {
+            for(let i=0; i<user.memberBoards.length; i++) {
+                try {
+                    const response = await fetch(`http://localhost:5000/api/boards/${user.memberBoards[i]}`);
+                    const responseData = await response.json();
+                    if(!response.ok) {
+                        throw new Error(responseData.message);
+                    }
+                    userBoardDatas.push(responseData.board.id);
+                } catch (error) {}
+            }
+            
+            try {
+                const response = await fetch(`http://localhost:5000/api/users/${user.username}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({username: user.username, newBoards: userBoardDatas})
+            })
+                const responseData = await response.json();
+                if(!response.ok) {
+                    throw new Error(responseData.message);
+                }
+            } catch (error) {
+                
+            }
+        }
+        fetchBoards();
+    }, [user])
     
     return (
         <>
             <ErrorLayout error={error}/>
-            <div> 
+            <div className='pb-5'> 
                 {isLoading && <LoadingSpinner asOverlay />}
                 <AllKanbanSearch />
                 {(board.allBoards && board.searchKey === '') && <AllKanbanHeader length={board.allBoards.length} />}
