@@ -1,10 +1,10 @@
 import { boardsController } from '../controllers/boards-controller.js';
+import checkAuth from '../middleware/check-auth.js';
 
 import express from 'express';
 import { check } from 'express-validator';
 
 const router = express.Router();
-
 
 router.get('/all-boards', boardsController.getAllBoards);
 
@@ -14,15 +14,21 @@ router.get('/user/:uid', boardsController.getBoardsByUserId);
 
 router.get('/boards/:bid/members', boardsController.getMembersOfBoard);
 
+router.use(checkAuth);
+
 router.post('/boards/:bid/add-task',
     check('task').not().isEmpty(),
     boardsController.addTaskToBoard
 );
 
+router.patch('/boards/:bid',
+    boardsController.updateTasks
+);
+
 router.post('/', 
     [
         check('title').trim().notEmpty(),
-        check('numberOfMembers').not().isEmpty(),
+        check('membersNumber').not().isEmpty(),
         check('usageArea').isLength({ min: 5 }),
         check('boardPassword').isLength({ min: 5 }),
     ] , 
@@ -37,6 +43,7 @@ router.post('/all-boards/join',
 router.patch('/:bid', 
     [
         check('title').trim().notEmpty(),
+        check('membersNumber').not().isEmpty(),
         check('usageArea').isLength({ min: 5 })
     ] ,
     boardsController.updateBoardById

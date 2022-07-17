@@ -4,18 +4,27 @@ import HttpError from './models/http-error.js';
 
 import express from 'express';
 import mongoose from 'mongoose';
+import fs from 'fs';
+import path from 'path';
 import 'dotenv/config';
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
-/*
-This will parse any incoming requests body and extract any JSON data which is in there, convert it to regular Javascript data structures like objects and arrays and then call next automatically so that we reached the next middleware nd then also add this JSON data
-*/
 
-app.use('/api/boards', boardsRoutes);  // -----> /api/boards/...
-app.use('/api/users', usersRoutes);  // -----> /api/users/...
+app.use('/uploads/images', express.static(path.join('uploads', 'images')))
+
+// to prevent the CORS errors
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+    next();
+})
+
+app.use('/api/boards', boardsRoutes);
+app.use('/api/users', usersRoutes);
 
 
 // if it doesn't match any route
@@ -26,10 +35,14 @@ app.use((req, res, next) => {
 
 // Triggered if there is an error in the routes. e.g. for a board not found in db
 app.use((error, req, res, next) => {
+    if(req.file) {
+        fs.unlink(req.file.path, (err) => {
+            console.log(err);
+        });
+    }
     if(res.headerSent) {
         return next(error)
     }
-
     res.status(error.code || 500);
     res.json({message: error.message || 'An unknown error occured!'});
 });
