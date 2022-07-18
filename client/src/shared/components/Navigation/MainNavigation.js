@@ -17,72 +17,74 @@ const MainNavigation = () => {
 	}
 	
 	return (
-		<div className='flex justify-between items-center'>
-			<Link to='/' className='flex justify-center items-center'>
-				<img className={styles.logo} src={logo} alt='logo' />
-				<h1 className='font-medium text-lg'>React Kanban</h1>
-			</Link>
+		<div className={`${styles.header} px-10`}>
+			<div className='flex justify-between items-center text-white mb-5'>
+				<Link to='/' className='flex justify-center items-center'>
+					<img className={styles.logo} src={logo} alt='logo' />
+					<h1 className='font-medium text-lg'>React Kanban</h1>
+				</Link>
 
-			<div className={styles.links}>
-				{
-					user.isLoggedIn && 
-					<>
-						<NavLink
-							to={`/${user.user.username}`}
-							className={ (navData) => navData.isActive ? 'border-b-2 border-blue-600' : '' }
-						>
-							Profile
-						</NavLink>
-
-						{
-							user.user.ownBoards.length > 0 ?
+				<div className={styles.links}>
+					{
+						user.isLoggedIn && 
+						<>
 							<NavLink
-								to={`/boards/${user.user.ownBoards[0]}`}
-								className={ (navData) => navData.isActive ? 'border-b-2 border-blue-600' : '' }
+								to={`/${user.user.username}`}
+								className={ (navData) => navData.isActive ? 'text-black' : '' }
 							>
-								My kanban
-							</NavLink> :
-							user.user.memberBoards.length > 0 &&
-							<NavLink
-								to={`/boards/${user.user.memberBoards[0]}`}
-								className={ (navData) => navData.isActive ? 'border-b-2 border-blue-600' : '' }
-							>
-								My kanban
+								Profile
 							</NavLink>
-						}
 
+							{
+								user.user.ownBoards.length > 0 ?
+								<NavLink
+									to={`/boards/${user.user.ownBoards[0]}`}
+									className={ (navData) => navData.isActive ? 'text-black' : '' }
+								>
+									My kanban
+								</NavLink> :
+								user.user.memberBoards.length > 0 &&
+								<NavLink
+									to={`/boards/${user.user.memberBoards[0]}`}
+									className={ (navData) => navData.isActive ? 'text-black' : '' }
+								>
+									My kanban
+								</NavLink>
+							}
+
+							<NavLink
+								to='/all-boards'
+								className={ (navData) => navData.isActive ? 'text-black' : '' }
+							>
+								Kanbans
+							</NavLink>
+
+							<NavLink
+								to='/boards/new'
+								className={ (navData) => navData.isActive ? 'text-black' : '' }
+							>
+								New
+							</NavLink>
+
+							<Link
+								to='/'
+								onClick={logoutHandler}
+							>
+								Logout
+							</Link>
+							</>
+					}
+
+					{
+						!user.isLoggedIn &&
 						<NavLink
-							to='/all-boards'
-							className={ (navData) => navData.isActive ? 'border-b-2 border-blue-600' : '' }
+							to='/authenticate'
+							className={ (navData) => navData.isActive ? 'text-black' : '' }
 						>
-							Kanbans
+							Login
 						</NavLink>
-
-						<NavLink
-							to='/boards/new'
-							className={ (navData) => navData.isActive ? 'border-b-2 border-blue-600' : '' }
-						>
-							New
-						</NavLink>
-
-						<Link
-							to='/'
-							onClick={logoutHandler}
-						>
-							Logout
-						</Link>
-						</>
-				}
-
-				{
-					!user.isLoggedIn &&
-					<NavLink
-						to='/authenticate'
-						className={ (navData) => navData.isActive ? 'border-b-2 border-blue-600' : '' }
-					>
-						Login
-					</NavLink>
-				}
+					}
+				</div>
 			</div>
 		</div>
 	);

@@ -2,7 +2,10 @@ import NewKanbanForm from '../components/NewKanban/NewKanbanForm';
 
 const NewBoard = () => {
     return (
-        <NewKanbanForm />
+        <div className='margin'>
+            <NewKanbanForm />
+        </div>
+
     )
 }
 

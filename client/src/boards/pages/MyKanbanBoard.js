@@ -75,7 +75,7 @@ const MyKanbanBoard = () => {
     }, [params.bid, dispatch]);
     
     return (
-        <>
+        <div className='margin'>
             <ErrorLayout error={error} />
             {isLoading && <LoadingSpinner asOverlay />}
             {
@@ -123,7 +123,7 @@ const MyKanbanBoard = () => {
                     </div>
                 </div>
             }
-        </>
+        </div>
     )
 }
 

@@ -1,3 +1,7 @@
+.header {
+    background-color: #389EF4;
+}
+
 .logo {
     height: 3rem;
 }
@@ -8,5 +12,5 @@
 }
 
 .links a:hover {
-    border-bottom: 2px solid rgb(37 99 235);
+    color: black;
 }

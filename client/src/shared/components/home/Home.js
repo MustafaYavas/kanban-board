@@ -7,7 +7,7 @@ const Home = () => {
     const {isLoggedIn} = useSelector(state => state.user);
 
     return (
-        <div className='grid grid-cols-1 sm:grid-cols-2'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 margin'>
             <div className='flex flex-col justify-center items-start'>
                 <h1 className='text-8xl text-blue-600 font-bold'>Kanban</h1>
                 <h3 className='text-4xl text-blue-600 font-bold pb-16 '>Visualize your workflow</h3>

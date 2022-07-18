@@ -68,7 +68,7 @@ const AllKanbanList = () => {
     }, [user])
     
     return (
-        <>
+        <div className='margin'>
             <ErrorLayout error={error}/>
             <div className='pb-5'> 
                 {isLoading && <LoadingSpinner asOverlay />}
@@ -112,7 +112,7 @@ const AllKanbanList = () => {
                 }
                 
             </div>
-        </>
+        </div>
     )
 }
 

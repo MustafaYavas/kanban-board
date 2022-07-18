@@ -32,11 +32,11 @@ const Profile = () => {
     }, [params.username, dispatch])
 
     return (
-        <>
+        <div className='margin'>
             <ErrorLayout error={error} />
             { !userDatas && <LoadingSpinner asOverlay/> }
             { userDatas && <UserProfile datas={userDatas} /> }
-        </>
+        </div>
     )
 }
 
