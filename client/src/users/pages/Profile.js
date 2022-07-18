@@ -31,24 +31,6 @@ const Profile = () => {
         fetchData();
     }, [params.username, dispatch])
 
-    // useEffect(() => {
-    //     const fetchBoards = async() => {
-    //         let userBoardDatas = []
-    //         for(let i=0; i<userDatas.memberBoards.length; i++) {
-    //             try {
-    //                 const response = await fetch(`http://localhost:5000/api/boards/${userDatas.memberBoards[i]}`);
-    //                 const responseData = await response.json();
-    //                 if(!response.ok) {
-    //                     throw new Error(responseData.message);
-    //                 }
-    //                 userBoardDatas.push(responseData.board.id);
-    //             } catch (error) {}
-    //         }
-    //         dispatch(userActions.setUserBoards(userBoardDatas));
-    //     }
-    //     userDatas && fetchBoards();
-    // }, [userDatas, dispatch])
-
     return (
         <>
             <ErrorLayout error={error} />

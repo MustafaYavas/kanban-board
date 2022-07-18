@@ -87,10 +87,10 @@ const UpdateBoard = () => {
             {isLoading && <LoadingSpinner asOverlay />}
             <Link
                 to={`/boards/${params}/update`}
-                className='border border-blue-600 p-2 rounded-md font-medium hover:bg-blue-600 hover:text-white'
+                className='border border-green-500 p-2 rounded-md font-medium hover:bg-green-500 hover:text-white'
                 onClick={showModalHandler}
             >
-                Update
+                UPDATE
             </Link>
 
             <Modal 

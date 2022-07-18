@@ -72,10 +72,11 @@ const AddTask = (props) => {
 			
 		}
     }
+	
     const addItemHandler = async() => {
 		if(!memberName) return setError('You need to select a member!');
 		setIsLoading(true);
-		let newTask = {taskName: task, taskTable: tableName, taskPriority: priorityName, taskOwner: memberName[0].id, img: memberName[0].image, id: uuidv4()};
+		let newTask = {taskName: task, taskTable: tableName, taskPriority: priorityName, taskOwner: memberName[0].id, taskOwnerName: memberName[0].username, img: memberName[0].image, id: uuidv4()};
 		try {
 			const response = await fetch(`http://localhost:5000/api/boards/boards/${params}/add-task`, {
 				method: 'POST',
@@ -124,7 +125,7 @@ const AddTask = (props) => {
             <Link to={`/boards/${params}/add-task`}>
 				<div 
 					onClick={showModalHandler} 
-					className='flex justify-center items-center px-5 rounded-lg bg-slate-200' 
+					className='flex justify-center items-center px-5 rounded-lg bg-fuchsia-600 text-white hover:bg-fuchsia-500 ml-5' 
 					role='button'
 				>
 					<p className='m-2'>Add New Task</p>

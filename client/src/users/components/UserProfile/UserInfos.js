@@ -1,20 +1,19 @@
 const UserInfos = (props) => {
-    const { imgUrl, name, job, email } = props;
+    const { imgUrl, name, email } = props;
 
 	return (
 		<>
 			<div className='w-28 h-28'>
 				<img
-					className='rounded-full border-2 border-slate-700'
+					className='rounded-full border-2 border-white'
 					src={imgUrl}
 					alt='profile'
 				/>
 			</div>
 
-			<div className='mt-5 border-t border-slate-700'>
+			<div className='mt-3 border-t border-white text-white text-center'>
 				<p className='text-2xl font-semibold'>{name}</p>
-				<p className='text-lg font-semibold'>{job}</p>
-				<p className='text-md font-medium'>{email}</p>
+				<p className='text-md font-normal'>{email}</p>
 			</div>
 		</>
 	);

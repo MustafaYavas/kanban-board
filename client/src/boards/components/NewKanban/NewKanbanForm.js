@@ -144,7 +144,7 @@ const NewKanbanForm = () => {
 					<div className='flex justify-center'>
 						<Button
 							type='submit'
-							className={`rounded-3xl px-6 py-2 text-black text-center font-bold ${formError ? 'bg-slate-300' : 'bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-300 hover:to-blue-400'}`}
+							className={`rounded-lg px-6 py-2 text-black text-center font-bold ${formError ? 'bg-slate-300' : 'bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-300 hover:to-blue-400'}`}
 							disabled={formError}
 						>
 							CREATE

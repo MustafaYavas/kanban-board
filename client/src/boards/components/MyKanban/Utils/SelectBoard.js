@@ -8,7 +8,7 @@ import { boardActions } from '../../../../shared/store/kanban-slice';
 import { useNavigate } from 'react-router-dom';
 
 const SelectBoard = (props) => {
-    const { id } = props;
+    const { title } = props;
     const user = useSelector(state => state.user).user;
     const board = useSelector(state => state.board);
     const [boardDatas, setBoardDatas] = useState([]);
@@ -45,8 +45,6 @@ const SelectBoard = (props) => {
         fetchDatas();
     }, [user.memberBoards, board]);
 
-    // console.log(boardDatas);
-
     const selectHandler = (e) => {
         const fetchData = async() => {
             setIsLoading(true);
@@ -72,11 +70,12 @@ const SelectBoard = (props) => {
             {isLoading && <LoadingSpinner asOverlay />}
             <select 
                 onChange={selectHandler} 
-                className='border border-slate-300 rounded-md font-medium text-sky-600 px-5 text-lg'
+                className='border border-rose-900 rounded-md font-medium text-rose-600 px-5 text-lg'
+                value={title}
             >
                 {
                     boardDatas.map(board => (
-                        <option selected={id === board.id} key={board.id} value={board.title}>{board.title}</option>
+                        <option key={board.id} value={board.title}>{board.title}</option>
                     ))
                 }
             </select>
