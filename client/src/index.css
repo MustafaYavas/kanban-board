@@ -23,3 +23,9 @@ code {
 .margin {
   margin: 0 2.5rem;
 }
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

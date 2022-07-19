@@ -1,18 +1,24 @@
 import Layout from './shared/components/layout/Layout';
 import Home from './shared/components/home/Home';
-import Auth from './users/pages/Auth';
-import AllKanbanList from './boards/pages/AllKanbanList';
-import NewBoard from './boards/pages/NewBoard';
-import MyKanbanBoard from './boards/pages/MyKanbanBoard'
-import Profile from './users/pages/Profile';
+// import Auth from './users/pages/Auth'
+// import AllKanbanList from './boards/pages/AllKanbanList';
+// import NewBoard from './boards/pages/NewBoard';
+// import MyKanbanBoard from './boards/pages/MyKanbanBoard';
+// import Profile from './users/pages/Profile';
 
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { userActions } from './shared/store/user-slice';
+import LoadingSpinner from './shared/components/UI/Spinner/LoadingSpinner';
+
+const Auth = React.lazy(() => import('./users/pages/Auth'));
+const AllKanbanList = React.lazy(() => import('./boards/pages/AllKanbanList'));
+const NewBoard = React.lazy(() => import('./boards/pages/NewBoard'));
+const MyKanbanBoard = React.lazy(() => import('./boards/pages/MyKanbanBoard'));
+const Profile = React.lazy(() => import('./users/pages/Profile'));
 
 let logoutTimer;
-
 const App = () => {
     const { token, tokenExpDate } = useSelector(state => state.user);
     const dispatch = useDispatch();
@@ -68,9 +74,11 @@ const App = () => {
 
     return (
         <Layout>
-            <Routes>
-                { routes }
-            </Routes>
+            <Suspense fallback={<div className='center'><LoadingSpinner /></div>}>
+                <Routes>
+                    { routes }
+                </Routes>
+            </Suspense>
         </Layout>
     )
 }
