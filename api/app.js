@@ -15,7 +15,6 @@ app.use(express.json());
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')))
 
-// to prevent the CORS errors
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -26,14 +25,10 @@ app.use((req, res, next) => {
 app.use('/api/boards', boardsRoutes);
 app.use('/api/users', usersRoutes);
 
-
-// if it doesn't match any route
 app.use((req, res, next) => {
     throw new HttpError('Could not found this route!', 404);
 })
 
-
-// Triggered if there is an error in the routes. e.g. for a board not found in db
 app.use((error, req, res, next) => {
     if(req.file) {
         fs.unlink(req.file.path, (err) => {

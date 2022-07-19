@@ -5,7 +5,6 @@ import { validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
-import mongoose from 'mongoose';
 
 const getUser = async(req, res, next) => {
     const username = req.params.username;
@@ -18,7 +17,7 @@ const getUser = async(req, res, next) => {
     }
 
     if(!user) {
-        return next(new HttpError('Could not find user for the provided id!', 404))
+        return next(new HttpError('Could not find user for the provided id!', 404));
     }
 
     res.json({ user });
@@ -35,7 +34,7 @@ const updateUser = async(req, res, next) => {
     }
 
     if(!user) {
-        return next(new HttpError('Could not find user for the provided id!', 404))
+        return next(new HttpError('Could not find user for the provided id!', 404));
     }
     
     user.memberBoards = req.body.newBoards;
@@ -68,7 +67,7 @@ const login = async(req, res, next) => {
     try {
         isValidPassword = await bcrypt.compare(password, existingUser.password);
     } catch (error) {
-        return next(new HttpError('Could not log you in. Please check your credentials and try again!', 500)) 
+        return next(new HttpError('Could not log you in. Please check your credentials and try again!', 500));
     }
 
     if(!isValidPassword) {
@@ -83,10 +82,10 @@ const login = async(req, res, next) => {
             { expiresIn: '24h' }
         )
     } catch (error) {
-        return next(new HttpError('Logging in failed. Please try again later!', 500))
+        return next(new HttpError('Logging in failed. Please try again later!', 500));
     }
 
-    res.json({ user: existingUser, userId: existingUser.id, email: existingUser.email, token})
+    res.json({ user: existingUser, userId: existingUser.id, email: existingUser.email, token});
 }
 
 const signup = async(req, res, next) => {
@@ -142,7 +141,7 @@ const signup = async(req, res, next) => {
         return next(new HttpError('Signing up failed. Please try again later!', 500))
     }
 
-    res.status(201).json({ user: newUser, userId: newUser.id, email: newUser.email, token })
+    res.status(201).json({ user: newUser, userId: newUser.id, email: newUser.email, token });
 }
 
 export const usersController = {

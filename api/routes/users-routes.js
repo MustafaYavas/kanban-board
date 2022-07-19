@@ -23,5 +23,4 @@ router.post('/signup',
     usersController.signup
 );
 
-
 export default router;

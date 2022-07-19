@@ -5,7 +5,6 @@ import User from '../models/user.js';
 import { validationResult } from 'express-validator';
 import mongoose from 'mongoose';
 
-// +
 const getAllBoards = async(req, res, next) => {
     let boards;
     try {
@@ -17,7 +16,6 @@ const getAllBoards = async(req, res, next) => {
     res.json(boards);
 };
 
-// +
 const getBoardById = async(req, res, next) => { 
     const {id} = req.body;
     const boardId = req.params.bid || id;
@@ -51,10 +49,9 @@ const getBoardsByUserId = async(req, res, next) => {
         return next(new HttpError('Could not find a board for the provided user id!', 404));
     }
 
-    res.json({ boards })
+    res.json({ boards });
 }
 
-// +
 const createBoard = async(req, res, next) => {
     const error = validationResult(req);
     if(!error.isEmpty()) {
@@ -177,7 +174,6 @@ const deleteBoardById = async(req, res, next) => {
     res.status(200).json({ message: 'Board deleted!' });
 };
 
-// +
 const joinBoardById = async(req, res, next) => {
     const error = validationResult(req);
     if(!error.isEmpty()) {
@@ -201,7 +197,7 @@ const joinBoardById = async(req, res, next) => {
     if(board.boardPassword !==  boardPassword) {
         return next(new HttpError('Wrong credential. Please try another password!', 422));
     }
-    // girişten önce daha önce girmiş mi kontrol et
+    
     try {
         const sess = await mongoose.startSession();
         sess.startTransaction();
@@ -211,7 +207,7 @@ const joinBoardById = async(req, res, next) => {
         await board.save({ session: sess });
         await sess.commitTransaction();
     } catch (err) {
-        return next(new HttpError('Creating new board failed!', 500))
+        return next(new HttpError('Creating new board failed!', 500));
     }
 
     res.status(201).json({ board });
@@ -298,10 +294,6 @@ const updateTasks = async(req, res, next) => {
         return next(new HttpError('Could not find board!', 404));
     }
     
-    if(board.owner.toString() !== req.userData.userId) {
-        return next(new HttpError('You are not allowed to delete this task!', 403));
-    }
-    
     if(taskId) {
         const updatedTasks = board.tasks.map(task => {
             if(task.id === taskId) return {...task, taskTable: req.body.table}
@@ -309,7 +301,12 @@ const updateTasks = async(req, res, next) => {
         });
         board.tasks = updatedTasks;
     } 
-    else board.tasks = req.body;
+    else {
+        if(board.owner.toString() !== req.userData.userId) {
+            return next(new HttpError('You are not allowed to delete this task!', 403));
+        }
+        board.tasks = req.body
+    }
     
     
     try {

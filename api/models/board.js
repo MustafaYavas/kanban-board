@@ -6,9 +6,9 @@ const boardSchema = new Schema({
     title: { type: String, required: true },
     usageArea: { type: String, required: true },
     membersNumber: { type: Number, required: true },
-    owner: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },      // proje kim tarafından oluşturuldu
-    members: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }],  // projedeki üyeler
-    tasks: [{ type: Object, required: true }],    // projedeki görevler
+    owner: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
+    members: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }],
+    tasks: [{ type: Object, required: true }],
     creatorName: { type: String, required: true },
     boardPassword: { type: String, required: true },
     createDate: { type: String, required: true }

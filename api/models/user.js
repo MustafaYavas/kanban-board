@@ -9,8 +9,8 @@ const userSchema = new Schema({
     username: { type: String, required: true, minlength: 5 },
     password: { type: String, required: true, minlength: 5 },
     image: { type: String, required: true },
-    ownBoards:  [{ type: mongoose.Types.ObjectId, required: true, ref: 'Board' }],      // sahibi olduğu projeler
-    memberBoards:  [{ type: mongoose.Types.ObjectId, required: true, ref: 'Board' }]    // üyesi olduğu projeler
+    ownBoards:  [{ type: mongoose.Types.ObjectId, required: true, ref: 'Board' }],
+    memberBoards:  [{ type: mongoose.Types.ObjectId, required: true, ref: 'Board' }]
 });
 
 userSchema.plugin(uniqueValidator);
