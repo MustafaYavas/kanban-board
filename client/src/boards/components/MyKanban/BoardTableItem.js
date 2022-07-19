@@ -33,7 +33,7 @@ const BoardTableItem = (props) => {
 		setError();
 		const newTasks = board.tasks.filter(t => t.id !== task.id);
 		try {
-			const response = await fetch(`http://localhost:5000/api/boards/boards/${params.bid}`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards/boards/${params.bid}`, {
 				method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const BoardTableItem = (props) => {
 		dispatch(boardActions.moveBoardItemHandler({id: task.id, table: tables[index+1]}));
 		
 		try {
-			const response = await fetch(`http://localhost:5000/api/boards/boards/${params.bid}`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards/boards/${params.bid}`, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ const BoardTableItem = (props) => {
 		dispatch(boardActions.moveBoardItemHandler({id: task.id, table: tables[index-1]}));
 		
 		try {
-			const response = await fetch(`http://localhost:5000/api/boards/boards/${params.bid}`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards/boards/${params.bid}`, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json',
@@ -148,7 +148,7 @@ const BoardTableItem = (props) => {
 					<img
 						className='mx-2 self-end h-8 w-8'
 						style={{ borderRadius: '50%' }}
-						src={`http://localhost:5000/${task.img}`}
+						src={`${process.env.REACT_APP_ASSET_URL}/${task.img}`}
 						alt='person'
 						data-for={id.toString()}
 						data-tip

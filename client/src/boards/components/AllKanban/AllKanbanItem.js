@@ -47,7 +47,7 @@ const AllkanbanItem = (props) => {
         setError()
         if(password === boardPassword) {
             try {
-				const response = await fetch('http://localhost:5000/api/boards/all-boards/join', {
+				const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards/all-boards/join`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',

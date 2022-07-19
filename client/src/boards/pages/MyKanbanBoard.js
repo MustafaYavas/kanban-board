@@ -37,7 +37,7 @@ const MyKanbanBoard = () => {
 
     const deleteBoardHandler = async() => {
         try {
-			const response = await fetch(`http://localhost:5000/api/boards/${board.id}`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards/${board.id}`, {
 				method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ const MyKanbanBoard = () => {
         const fetchData = async() => {
             setIsLoading(true);
             try {
-                const response = await fetch(`http://localhost:5000/api/boards/${params.bid}`);
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards/${params.bid}`);
                 const responseData = await response.json();
                 if(!response.ok) {
                     throw new Error(responseData.message);

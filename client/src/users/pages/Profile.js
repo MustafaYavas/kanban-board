@@ -16,7 +16,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchData = async() => {
             try {
-                const response = await fetch(`http://localhost:5000/api/users/${params.username}`);
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/${params.username}`);
                 const responseData = await response.json();
                 if(!response.ok) {
                     throw new Error(responseData.message);

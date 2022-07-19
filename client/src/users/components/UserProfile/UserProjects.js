@@ -16,7 +16,7 @@ const UserProjects = (props) => {
             const projectsArray = [];
             for(let i=0; i<projects.length; i++) {
                 try {
-                    const response = await fetch(`http://localhost:5000/api/boards/${projects[i]}`);
+                    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards/${projects[i]}`);
                     const responseData = await response.json();
                     if(!response.ok) {
                         throw new Error(responseData.message);

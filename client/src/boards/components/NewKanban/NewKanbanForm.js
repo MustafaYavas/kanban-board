@@ -30,7 +30,7 @@ const NewKanbanForm = () => {
 		setIsLoading(true);
 		setError();
 		try {
-			const response = await fetch('http://localhost:5000/api/boards', {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards`, {
 				method:'POST',
 				headers: {
 					'Content-Type': 'application/json',

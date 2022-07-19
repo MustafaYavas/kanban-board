@@ -21,7 +21,7 @@ const AddTask = (props) => {
     const [task, setTask] = useState('');
     const [tableName, setTableName] = useState(tables[0]);
     const [priorityName, setPriorityName] = useState(PRIORITIES[0]);
-    const [memberName, setMemberName] = useState();
+    const [memberName, setMemberName] = useState(null);
     const [members, setMembers] = useState(null);
 	const [isTouched, setIsTouched] = useState(false);
 	const [formError, setFormError] = useState(true);
@@ -62,7 +62,7 @@ const AddTask = (props) => {
 
     const selectMemberHandler = async(e) => {
 		try {
-			const response = await fetch(`http://localhost:5000/api/users/${e.target.value}`);
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/${e.target.value}`);
             const responseData = await response.json();
             if(!response.ok) {
                 throw new Error(responseData.message);
@@ -78,7 +78,7 @@ const AddTask = (props) => {
 		setIsLoading(true);
 		let newTask = {taskName: task, taskTable: tableName, taskPriority: priorityName, taskOwner: memberName[0].id, taskOwnerName: memberName[0].username, img: memberName[0].image, id: uuidv4()};
 		try {
-			const response = await fetch(`http://localhost:5000/api/boards/boards/${params}/add-task`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards/boards/${params}/add-task`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ const AddTask = (props) => {
 
 	const getMembers = async() => {
 		try {
-			const response = await fetch(`http://localhost:5000/api/boards/boards/${board.id}/members`);
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards/boards/${board.id}/members`);
             const responseData = await response.json();
             if(!response.ok) {
                 throw new Error(responseData.message);

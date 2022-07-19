@@ -26,7 +26,7 @@ const SelectBoard = (props) => {
             let ids = [];
             for(let i = 0; i < user.memberBoards.length; i++) {
                 try {
-                    const response = await fetch(`http://localhost:5000/api/boards/${user.memberBoards[i]}`);
+                    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards/${user.memberBoards[i]}`);
                     const responseData = await response.json();
                     if(!response.ok) {
                         throw new Error(responseData.message);
@@ -49,7 +49,7 @@ const SelectBoard = (props) => {
         const fetchData = async() => {
             setIsLoading(true);
             try {
-                const response = await fetch(`http://localhost:5000/api/boards/${boardIds[boardTitles.findIndex(t => t === e.target.value)]}`);
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards/${boardIds[boardTitles.findIndex(t => t === e.target.value)]}`);
                 const responseData = await response.json();
                 if(!response.ok) {
                     throw new Error(responseData.message);

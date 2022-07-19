@@ -19,7 +19,7 @@ const AllKanbanList = () => {
         const fetchDatas = async() => {
             setIsLoading(true);
             try {
-                const response = await fetch('http://localhost:5000/api/boards/all-boards');
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards/all-boards`);
                 const responseData = await response.json();
                 if(!response.ok) {
                     throw new Error(responseData.message);
@@ -39,7 +39,7 @@ const AllKanbanList = () => {
         const fetchBoards = async() => {
             for(let i=0; i<user.memberBoards.length; i++) {
                 try {
-                    const response = await fetch(`http://localhost:5000/api/boards/${user.memberBoards[i]}`);
+                    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards/${user.memberBoards[i]}`);
                     const responseData = await response.json();
                     if(!response.ok) {
                         throw new Error(responseData.message);
@@ -49,7 +49,7 @@ const AllKanbanList = () => {
             }
             
             try {
-                const response = await fetch(`http://localhost:5000/api/users/${user.username}`, {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/${user.username}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
