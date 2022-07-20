@@ -54,7 +54,7 @@ const NewKanbanForm = () => {
 	};
 
 	useEffect(() => {
-		if(title.length < 5 || membersNumber.length === 0 || usageArea.length < 5 || boardPassword.length < 5)       			setFormError(true);
+		if(title.length === 0 || membersNumber.length === 0 || usageArea.length < 5 || boardPassword.length < 5)       			setFormError(true);
 		else setFormError(false);
 	}, [title, membersNumber, usageArea, boardPassword, formError]);
 

@@ -24,7 +24,7 @@ const Profile = () => {
                 setUserDatas(responseData.user[0]);
                 dispatch(userActions.setUserBoards(responseData.user[0].memberBoards));
             } catch (error) {
-                setError('Could not load user infos. Please tyr again later!');
+                setError('Could not load user infos. Please try again later!');
             }
         }
 

@@ -148,7 +148,7 @@ const BoardTableItem = (props) => {
 					<img
 						className='mx-2 self-end h-8 w-8'
 						style={{ borderRadius: '50%' }}
-						src={`${process.env.REACT_APP_ASSET_URL}/${task.img}`}
+						src={`${task.img}`}
 						alt='person'
 						data-for={id.toString()}
 						data-tip

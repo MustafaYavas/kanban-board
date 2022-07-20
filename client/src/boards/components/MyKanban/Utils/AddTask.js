@@ -96,7 +96,7 @@ const AddTask = (props) => {
 			setError('Something went wrong while adding new task. Please try again later!');
 		}
 		setIsLoading(false);
-		setMemberName([])
+		setMemberName(null)
     }
 
 	const getMembers = async() => {

@@ -28,7 +28,7 @@ const App = () => {
     useEffect(() => {
         const datas = JSON.parse(localStorage.getItem('userData'));
         if(datas && datas.token && new Date(datas.expiration) > new Date()) {
-            dispatch(userActions.loginHandler(
+            dispatch(userActions.authHandler(
                 {user: datas.user, token: datas.token, tokenExpDate: new Date(datas.expiration)}
             ));
         }

@@ -1,4 +1,4 @@
-import styles from "./Input.module.css";
+import styles from './Input.module.css';
 
 const Input = (props) => {
 	const { label, icon, className, onChange, value, iconClass, style, type, min, max, placeholder, error, errorText } = props;
@@ -23,7 +23,7 @@ const Input = (props) => {
 					placeholder={placeholder}
 				/>
 				{
-					error && <p className='text-sm text-red-600 ml-3 mb-5'>{errorText}</p>
+					error && <p className='text-sm text-red-600 ml-3'>{errorText}</p>
 				}
 			</div>
 		</>

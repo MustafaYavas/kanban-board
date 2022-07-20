@@ -3,6 +3,7 @@ import styles from './MainNavigation.module.css';
 import { userActions } from '../../store/user-slice';
 import { boardActions } from '../../store/kanban-slice';
 
+import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -90,4 +91,4 @@ const MainNavigation = () => {
 	);
 };
 
-export default MainNavigation;
+export default React.memo(MainNavigation);

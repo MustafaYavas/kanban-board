@@ -14,7 +14,7 @@ const UserProfile = (props) => {
             <div className={`grid grid-cols-1 md:grid-cols-3`}>
                 <div className='flex flex-col justify-center items-center bg-gradient-to-r from-amber-600 to-orange-600 rounded-bl-lg py-1'>
                     <UserInfos 
-                        imgUrl={`${process.env.REACT_APP_ASSET_URL}/${datas.image}`}
+                        imgUrl={datas.image}
                         name={datas.name}
                         email={datas.email}
                     />

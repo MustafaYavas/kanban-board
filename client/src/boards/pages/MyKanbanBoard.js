@@ -100,7 +100,7 @@ const MyKanbanBoard = () => {
                                     <Link 
                                         to={`/boards/${board.id}/delete`}
                                         onClick={showModalHandler} 
-                                        className='border border-red-600 p-2 rounded-md font-medium hover:bg-red-600 hover:text-white ml-3'
+                                        className='border border-red-600 p-2 rounded-md font-medium hover:bg-red-600 hover:text-white ml-5'
                                     >
                                         DELETE
                                     </Link>

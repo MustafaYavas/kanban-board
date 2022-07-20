@@ -12,7 +12,6 @@ const AllKanbanList = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
     const board = useSelector(state => state.board);
-    const user = useSelector(state => state.user).user;
     const dispatch = useDispatch();
     
     useEffect(() => {
@@ -25,7 +24,7 @@ const AllKanbanList = () => {
                     throw new Error(responseData.message);
                 }
                 dispatch(boardActions.setAllBoards(responseData));
-                dispatch(boardActions.sortByDateDesc())
+                dispatch(boardActions.sortByDateDesc());
             } catch (error) {
                 setError('Something went wrong while fetching board datas. Please try again later!');
             }
@@ -34,38 +33,7 @@ const AllKanbanList = () => {
         fetchDatas();
     }, [dispatch]);
 
-    useEffect(() => {
-        let userBoardDatas = [];
-        const fetchBoards = async() => {
-            for(let i=0; i<user.memberBoards.length; i++) {
-                try {
-                    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/boards/${user.memberBoards[i]}`);
-                    const responseData = await response.json();
-                    if(!response.ok) {
-                        throw new Error(responseData.message);
-                    }
-                    userBoardDatas.push(responseData.board.id);
-                } catch (error) {}
-            }
-            
-            try {
-                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/${user.username}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({username: user.username, newBoards: userBoardDatas})
-            })
-                const responseData = await response.json();
-                if(!response.ok) {
-                    throw new Error(responseData.message);
-                }
-            } catch (error) {
-                
-            }
-        }
-        fetchBoards();
-    }, [user])
+    
     
     return (
         <div className='margin'>
