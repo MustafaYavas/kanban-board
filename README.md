@@ -1,6 +1,6 @@
-# Kanban Board
+# :heavy_check_mark: Kanban Board
 
-It is a tool that allows you to visualize and manage your personal or team projects more easily. [Try it](https://mustafa-yavas-kanban-board.netlify.app/)
+It is a tool that allows you to visualize and manage your personal or team projects more easily. You can create your own project or join any of them and you can create new tasks for your project and assign it to a member. [Try it](https://mustafa-yavas-kanban-board.netlify.app/)
 
 ## Table of Contents
 * [Technologies](#technologies)
