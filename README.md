@@ -1,70 +1,63 @@
-# Getting Started with Create React App
+# Kanban Board
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+It is a tool that allows you to visualize and manage your personal or team projects more easily. [Try it](https://mustafa-yavas-kanban-board.netlify.app/)
 
-## Available Scripts
+## Table of Contents
+* [Technologies](#technologies)
+* [Installation](#installation)
+* [Update sources](#update-sources)
+* [Contact](#contact)
 
-In the project directory, you can run:
+## Technologies
+* [MongoDB](https://www.mongodb.com/)
+* [Express.js](https://expressjs.com/)
+* [React.js](https://reactjs.org/)
+* [Node.js](https://nodejs.org/en/)
+* [React Router](https://reactrouter.com/)
+* [Redux](https://redux.js.org/)
 
-### `npm start`
+## Installation
+To run it locally, first you need to clone this project (or download)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+git clone https://github.com/MustafaYavas/kanban-board.git
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Then enter the client and api files with the cd command and run the npm install command.
 
-### `npm test`
+```
+cd client
+npm install 
+cd ..
+cd api
+npm install 
+cd ..
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+After, you need to create 2 env files. One for client and the other one is for api.
 
-### `npm run build`
+The env file located in the client folder should contain the following component.
+```
+REACT_APP_BACKEND_URL=http://localhost:5000/api
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The env file located in the api folder should contain the following components.
+```
+JWT_SIGN_KEY=
+MONGO_CONNECT_STRING=
+```
+Just write anything in the first variable. For the second variable, you need to open an account in Mongo and create a new cluster. Then, after creating a new user from the Database Access tab, copy the connection string given to you here
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Finally run **npm start** command on both files separately.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Update sources
+Package usages in the application may vary.
+Run the following command to update
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+$ npm run pull
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contact
+You can contact me for any bugs or suggestions: mustafayavas40@gmail.com
