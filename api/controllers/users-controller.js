@@ -94,7 +94,7 @@ const signup = async(req, res, next) => {
         return next(new HttpError('Invalid inputs passed, please check your data!', 422));
     }
 
-    const { email, name, username, password } = req.body;
+    const { email, name, username, password, image } = req.body;
 
     let existingUser;
     try {
@@ -119,7 +119,7 @@ const signup = async(req, res, next) => {
         name: name.charAt(0).toUpperCase() + name.slice(1),
         username: username.charAt(0).toUpperCase() + username.slice(1),
         password: hashedPassword,
-        image: req.file.path,
+        image,
         ownBoards: [],
         memberBoards: []
     }) 

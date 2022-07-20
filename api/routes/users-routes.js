@@ -12,8 +12,7 @@ router.patch('/:username', usersController.updateUser);
 
 router.post('/login', usersController.login);
 
-router.post('/signup', 
-    fileUpload.single('image'),
+router.post('/signup',
     [
         check('email').normalizeEmail().isEmail(),
         check('name').trim().notEmpty(),
