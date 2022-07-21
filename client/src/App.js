@@ -1,10 +1,5 @@
 import Layout from './shared/components/layout/Layout';
 import Home from './shared/components/home/Home';
-// import Auth from './users/pages/Auth'
-// import AllKanbanList from './boards/pages/AllKanbanList';
-// import NewBoard from './boards/pages/NewBoard';
-// import MyKanbanBoard from './boards/pages/MyKanbanBoard';
-// import Profile from './users/pages/Profile';
 
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
