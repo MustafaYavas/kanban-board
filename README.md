@@ -10,17 +10,17 @@ It is a tool that allows you to visualize and manage your personal or team proje
 * [Contact](#contact)
 
 ## Preview
-![Alt text](/kanban-board/client/public/screenshots/1.PNG)
+![Screenshot](https://raw.githubusercontent.com/MustafaYavas/kanban-board/master/client/public/screenshots/1.PNG)
 ***
-![Alt text](/kanban-board/client/public/screenshots/2.PNG)
+![Screenshot](https://raw.githubusercontent.com/MustafaYavas/kanban-board/master/client/public/screenshots/2.PNG)
 ***
-![Alt text](/kanban-board/client/public/screenshots/3.PNG)
+![Screenshot](https://raw.githubusercontent.com/MustafaYavas/kanban-board/master/client/public/screenshots/3.PNG)
 ***
-![Alt text](/kanban-board/client/public/screenshots/4.PNG)
+![Screenshot](https://raw.githubusercontent.com/MustafaYavas/kanban-board/master/client/public/screenshots/4.PNG)
 ***
-![Alt text](/kanban-board/client/public/screenshots/5.PNG)
+![Screenshot](https://raw.githubusercontent.com/MustafaYavas/kanban-board/master/client/public/screenshots/5.PNG)
 ***
-![Alt text](/kanban-board/client/public/screenshots/6.PNG)
+![Screenshot](https://raw.githubusercontent.com/MustafaYavas/kanban-board/master/client/public/screenshots/6.PNG)
 
 ## Technologies
 * [MongoDB](https://www.mongodb.com/)
