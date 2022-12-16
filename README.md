@@ -3,10 +3,24 @@
 It is a tool that allows you to visualize and manage your personal or team projects more easily. You can create your own project or join any of them and you can create new tasks for your project and assign it to a member. [Try it](https://mustafa-yavas-kanban-board.netlify.app/)
 
 ## Table of Contents
+* [Preview](#preivew)
 * [Technologies](#technologies)
 * [Installation](#installation)
 * [Update sources](#update-sources)
 * [Contact](#contact)
+
+## Preview
+![Alt text](/kanban-board/client/public/screenshots/1.PNG)
+***
+![Alt text](/kanban-board/client/public/screenshots/2.PNG)
+***
+![Alt text](/kanban-board/client/public/screenshots/3.PNG)
+***
+![Alt text](/kanban-board/client/public/screenshots/4.PNG)
+***
+![Alt text](/kanban-board/client/public/screenshots/5.PNG)
+***
+![Alt text](/kanban-board/client/public/screenshots/6.PNG)
 
 ## Technologies
 * [MongoDB](https://www.mongodb.com/)
